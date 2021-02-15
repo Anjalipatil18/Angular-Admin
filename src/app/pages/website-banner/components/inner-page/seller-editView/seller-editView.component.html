@@ -1,0 +1,246 @@
+<div class="tableListEdit col-12 p-0">
+  <form
+    class="inputGroup col-xl-8 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="bannerPatchEditSubmit(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Upload Website Image
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <div
+            class="imgLoading"
+            *ngIf="isLoading"
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+          ></div>
+          <span class="imgUpload">
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              class="fileInput"
+              (change)="openDialogs($event, 0)"
+            />
+          </span>
+          <!-- <span
+            class="imagsProduct"
+            *ngFor="let img of imagesUrl; let k = index"
+          > -->
+          <span class="imagsProduct">
+            <!-- <i class="nb-close iconClose" (click)="removeImgs(k, 0)"></i> -->
+            <img
+              class="imgesList"
+              [src]="imagesUrl.imageLink ? imagesUrl.imageLink : imagesUrl.url"
+            />
+          </span>
+        </div>
+        <div class="col-12 text-center text-danger" *ngIf="imgErrMsg">
+          {{ imgErrMsg }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Upload Mobile App Image
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <div
+            class="imgLoading"
+            *ngIf="isLoading"
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+          ></div>
+          <span class="imgUpload">
+            <input
+              id="facebookImageUpload"
+              type="file"
+              accept="image/*"
+              class="fileInput"
+              (change)="openDialogs($event, 1)"
+            />
+          </span>
+          <!-- <span
+            class="imagsProduct"
+            *ngFor="let img of facebookImagesUrl; let k = index"
+          > -->
+          <span class="imagsProduct">
+            <!-- <i class="nb-close iconClose" (click)="removeImgs(k, 1)"></i> -->
+            <img
+              class="imgesList"
+              [src]="
+                facebookImagesUrl.imageLink
+                  ? facebookImagesUrl.imageLink
+                  : facebookImagesUrl.url
+              "
+            />
+          </span>
+        </div>
+        <div class="col-12 text-center text-danger" *ngIf="imgErrMsg">
+          {{ imgErrMsg }}
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listPlanType && listPlanType.length > 0"
+      >
+        <label class="col-md-4 col-form-label labelT"
+          >Linked with <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <ngx-select-dropdown
+            tabindex="0"
+            formControlName="linkedwith"
+            [options]="listPlanType"
+            (change)="selectionChanged($event)"
+            [config]="assetConfig"
+            [ngClass]="{ invalid: submitted && f.linkedwith.errors }"
+          ></ngx-select-dropdown>
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listUsers && listUsers.length > 0"
+        [hidden]="usersName"
+      >
+        <label class="col-md-4 col-form-label labelT"
+          >User
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <ngx-select-dropdown
+            tabindex="0"
+            [multiple]="false"
+            formControlName="users"
+            [config]="config"
+            [options]="listUsers"
+            (change)="getUsersAds($event)"
+            [ngClass]="{ invalid: submitted && f.users.errors }"
+          ></ngx-select-dropdown>
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listUsersAds && listUsersAds.length > 0"
+        [hidden]="usersActiveAds"
+      >
+        <label class="col-md-4 col-form-label labelT"
+          >User Ads
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <ngx-select-dropdown
+            tabindex="0"
+            [multiple]="false"
+            formControlName="userads"
+            [config]="config"
+            [options]="listUsersAds"
+            [ngClass]="{ invalid: submitted && f.userads.errors }"
+          ></ngx-select-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group row" [hidden]="linkurl">
+        <label class="col-md-4 col-form-label labelT"
+          >Enter URL
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="url"
+            formControlName="enterurl"
+            [ngClass]="{ invalid: submitted && f.enterurl.errors }"
+          />
+        </div>
+      </div>
+      <div
+        class="form-group row"
+        *ngIf="listAsset && listAsset.length > 0"
+        [hidden]="assetTypeUi"
+      >
+        <label class="col-md-4 col-form-label labelT"
+          >Asset Type
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <nb-select
+            placeholder="Select Type"
+            formControlName="assetTypeId"
+            (selectedChange)="getAsset($event)"
+            [ngClass]="{ invalid: submitted && f.assetTypeId.errors }"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of listAsset; let i = index"
+              >{{ list.title }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listSubAsset && listSubAsset.length > 0"
+        [hidden]="assetSubTypeUi"
+      >
+        <label class="col-md-4 col-form-label labelT"
+          >Asset Sub Type
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <nb-select
+            placeholder="Select Type"
+            (selectedChange)="getSubAsset($event)"
+            formControlName="assetSubtypeId"
+            [ngClass]="{ invalid: submitted && f.assetSubtypeId.errors }"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of listSubAsset; let i = index"
+              >{{ list.title }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listSubSubAsset && listSubSubAsset.length > 0"
+        [hidden]="assetSubSubTypeUi"
+      >
+        <label class="col-md-4 col-form-label labelT"
+          >Asset sub sub Type
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <nb-select
+            placeholder="Select Type"
+            (selectedChange)="getSubSubAsset($event)"
+            formControlName="assetSubSubTypeId"
+            [ngClass]="{ invalid: submitted && f.assetSubSubTypeId.errors }"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of listSubSubAsset; let i = index"
+              >{{ list.title }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+    </nb-card>
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

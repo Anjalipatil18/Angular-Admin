@@ -1,0 +1,20 @@
+.tableList {
+  .userImg {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .titleLink {
+    cursor: pointer;
+    color: #418fdb;
+    text-decoration: underline;
+    font-size: 13px;
+  }
+}
+
+:host::ng-deep {
+  nb-checkbox .customised-control {
+    padding: 0 !important;
+  }
+}

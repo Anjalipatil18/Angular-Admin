@@ -1,0 +1,107 @@
+<div class="tableList col-12 p-0">
+  <i class="nb-arrow-thin-left iconArrow" (click)="back()"></i>
+  <nb-card class="p-4">
+    <form
+      class="inputGroup"
+      [formGroup]="addForm"
+      (ngSubmit)="getUsers(addForm.value)"
+    >
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label labelT"
+          >First Name <em>*</em></label
+        >
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="firstName"
+            [ngClass]="{ invalid: submitted && f.firstName.errors }"
+            placeholder="First Name"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label labelT"
+          >Last Name <em>*</em></label
+        >
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="lastName"
+            placeholder="Last Name"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label labelT">Email <em>*</em></label>
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="email"
+            [ngClass]="{ invalid: submitted && f.email.errors }"
+            placeholder="Email"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label labelT"
+          >Phone Number <em>*</em></label
+        >
+        <div class="col-md-6">
+          <input
+            type="hidden"
+            class="form-control inputForm"
+            formControlName="countryCode"
+            readonly
+          />
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="phoneNumber"
+            [ngClass]="{ invalid: submitted && f.phoneNumber.errors }"
+            placeholder="Phone Number"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label labelT"
+          >Password <em>*</em></label
+        >
+        <div class="col-md-6">
+          <input
+            type="password"
+            class="form-control inputForm"
+            formControlName="password"
+            [ngClass]="{ invalid: submitted && f.password.errors }"
+            placeholder="Password"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label labelT">Profile Picture</label>
+        <div class="col-md-6">
+          <div
+            class="imgLoading"
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+          ></div>
+          <img class="userImgEdit" *ngIf="profilePic" [src]="profilePic" />
+          <input
+            type="file"
+            class="inputForm border-0"
+            accept="image/*"
+            (change)="openDialog($event)"
+          />
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="submit" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card>
+</div>

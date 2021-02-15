@@ -1,0 +1,66 @@
+<div class="tableListEdit col-12 p-0">
+  <!-- <div class="listCheckboxes mb-5">        
+        <nb-checkbox [disabled]="list.languageCode == 'en'" [value]="list.active" (change)="reportCheckbox($event, i, list.languageCode)" *ngFor="let list of langSelectors; let i = index;">{{list.language}}</nb-checkbox> 
+    </div> -->
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-8 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="getUsers(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Country
+          <em>*</em>
+        </label>
+        <div class="col-md-9 input-group full-width">
+          <ng-select
+            class="w-100"
+            [items]="currencies"
+            bindLabel="name"
+            placeholder="Country"
+            formControlName="country"
+            [(ngModel)]="currencySymbol"
+          >
+          </ng-select>
+          <!-- <input type="number" min="0" class="form-control inputForm" placeholder="Price" formControlName="price" [ngClass]="{ invalid: submitted && f.price.errors }"> -->
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >City
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <!-- <input type="text" class="form-control inputForm" placeholder="City" formControlName="title"> -->
+          <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="City"
+            formControlName="title"
+            [ngClass]="{ invalid: submitted && f.title.errors }"
+          />
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Taxes
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+            <nb-select multiple placeholder="Multiple Select" (selectedChange)="taxPercentageId($event)">
+              <nb-option [value]="list._id" *ngFor="let list of taxesPercen">{{list.percentageValue}}</nb-option> 
+            </nb-select>
+        </div>
+      </div> -->
+    </nb-card>
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

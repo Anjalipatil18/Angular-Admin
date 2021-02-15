@@ -1,0 +1,166 @@
+<div class="tableList col-12">
+  <div class="searchListContent col-12 my-3 p-0">
+    <label>Search By </label>
+    <input
+      type="text"
+      nbInput
+      class="searchInput"
+      placeholder="Username"
+      value=""
+      #attributeSearchGroup
+    />
+    <!-- <button nbButton status="info" class="float-right" size="small">Add </button> -->
+    <!-- <button
+      nbButton
+      status="danger"
+      class="float-right mr-1"
+      size="small"
+      [disabled]="statusId && statusId.length == 0"
+      (click)="deleteUnits(3)"
+    >
+      Permanent Delete
+    </button> -->
+  </div>
+
+  <ngx-datatable
+    #table
+    class="bootstrap col-12 p-0"
+    [rowHeight]="'auto'"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [rows]="userActiveData.length > 0 ? userActiveData : userActive"
+    [limit]="10"
+    [footerHeight]="40"
+    [count]="totRecords"
+    [externalPaging]="true"
+    (page)="getAllTags($event)"
+  >
+    <ngx-datatable-column name="SL.No">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>
+          {{
+            (rowIndex + 1) % 10 == 0
+              ? (rowIndex + 1) * (paginationIndex + 1)
+              : paginationIndex
+          }}{{ (rowIndex + 1) % 10 == 0 ? '' : rowIndex + 1 }}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Plan Name">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <button class="titleLink iconNb">
+          {{ row.name.en ? row.name.en : 'N/A' }}
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Plan Created On">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <button class="titleLink iconNb">
+          {{ row.timestamp | date: 'medium' }}
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Plan Type">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.typeText ? row.typeText : 'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Price">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span
+          >{{ row.currency ? row.currency : '' }}
+          {{ row.amount ? row.amount.toFixed(2) : '0.00' }}</span
+        >
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Validity">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span
+          >{{ row.validity.hours ? row.validity.hours : 'N/A' }} hours
+          {{ row.validity.days ? row.validity.days : 'N/A' }} days
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Plan Coverage">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.coverageScope }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Action">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <nb-checkbox
+          class="col-md-2 p-0"
+          (change)="reportCheckbox($event, row._id)"
+          >{{ row.checkbox }}</nb-checkbox
+        >
+        <fa-icon
+          class="iconFaicon"
+          [routerLink]="['./devices', row._id]"
+          [icon]="faMobileAlt"
+        ></fa-icon>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-footer>
+      <ng-template
+        ngx-datatable-footer-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+        let-isVisible="isVisible"
+      >
+        <div class="page-count">
+          <!-- <span *ngIf="selectedMessage">
+            {{ selectedCount.toLocaleString() }} {{ selectedMessage }} /
+          </span> -->
+          {{ totRecords }} Total
+        </div>
+        <datatable-pager
+          [pagerLeftArrowIcon]="'datatable-icon-left'"
+          [pagerRightArrowIcon]="'datatable-icon-right'"
+          [pagerPreviousIcon]="'datatable-icon-prev'"
+          [pagerNextIcon]="'datatable-icon-skip'"
+          [page]="curPage"
+          [size]="pageSize"
+          [count]="rowCount"
+          (change)="getAllTags($event)"
+        >
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>

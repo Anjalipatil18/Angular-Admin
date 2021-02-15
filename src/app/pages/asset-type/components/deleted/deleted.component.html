@@ -1,0 +1,152 @@
+<div class="tableList col-12 p-3">
+  <div class="searchListContent col-12 mb-3 p-0">
+    <label>Search By </label>
+    <input
+      type="text"
+      nbInput
+      class="searchInput"
+      placeholder="Type Title"
+      value=""
+    />
+    <button
+      nbButton
+      status="danger"
+      class="float-right mr-1"
+      size="small"
+      (click)="deleteType(100)"
+      [disabled]="statusId && statusId.length == 0"
+    >
+      Permanent Delete
+    </button>
+  </div>
+
+  <ngx-datatable
+    #table
+    class="bootstrap col-12 p-0"
+    [rowHeight]="'auto'"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [rows]="userActiveData.length > 0 ? userActiveData : userActive"
+    [limit]="10"
+    [footerHeight]="40"
+    [count]="totRecords"
+    [externalPaging]="true"
+    (page)="getAllUsers($event)"
+  >
+    <ngx-datatable-column name="SL.No">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>
+          {{
+            (rowIndex + 1) % 10 == 0
+              ? (rowIndex + 1) * (paginationIndex + 1)
+              : paginationIndex
+          }}{{ (rowIndex + 1) % 10 == 0 ? '' : rowIndex + 1 }}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Type Image">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span
+          ><img
+            class="userImg"
+            [src]="row.images.website"
+            onerror="this.src='assets/images/defaultPerson.png'"
+        /></span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Type Title">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.titleLang.en ? row.titleLang.en : 'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Sub Types">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span *ngIf="!row.hasSubType">N/A</span>
+        <button
+          class="titleLink iconNb"
+          *ngIf="row.hasSubType"
+          [routerLink]="['./sub-type', row.id]"
+        >
+          {{ row.assetSubTypesCount }}
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Attribute Groups">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <!-- <span *ngIf="row.hasSubType">N/A</span> -->
+        <button
+          class="titleLink iconNb"
+          [routerLink]="['./drag-drop', 1, row.id]"
+        >
+          {{ row.attributesGroupCount }}
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Action">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <nb-checkbox
+          class="col-md-2 p-0"
+          (change)="reportCheckbox($event, row.id)"
+          >{{ row.checkbox }}</nb-checkbox
+        >
+        <button
+          class="nb-edit iconNb text-info"
+          [routerLink]="['./updateType', 1, row.id, 1]"
+        ></button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-footer>
+      <ng-template
+        ngx-datatable-footer-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+        let-isVisible="isVisible"
+      >
+        <div class="page-count">
+          <span *ngIf="selectedMessage">
+            {{ selectedCount.toLocaleString() }} {{ selectedMessage }} /
+          </span>
+          {{ totRecords }} {{ totalMessage }} Total
+        </div>
+        <datatable-pager
+          [pagerLeftArrowIcon]="'datatable-icon-left'"
+          [pagerRightArrowIcon]="'datatable-icon-right'"
+          [pagerPreviousIcon]="'datatable-icon-prev'"
+          [pagerNextIcon]="'datatable-icon-skip'"
+          [page]="curPage"
+          [size]="pageSize"
+          [count]="rowCount"
+          (change)="getAllUsers($event)"
+        >
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>

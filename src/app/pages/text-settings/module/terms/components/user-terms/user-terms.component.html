@@ -1,0 +1,36 @@
+<div class="searchListContent row m-0 col-12 my-3 p-0">
+  <div class="col-md-3">
+    <label class="mr-2">Filter</label>
+    <nb-select
+      [(selected)]="selectedLanguage"
+      (selectedChange)="filterLanguage($event)"
+    >
+      <nb-option
+        [value]="list.language"
+        *ngFor="let list of langSelectors; let i = index"
+        (click)="getData(list)"
+        >{{ list.language }}</nb-option
+      >
+    </nb-select>
+  </div>
+</div>
+<form [formGroup]="form">
+  <quill-editor
+    #editor
+    [style.display]="hide ? 'none' : 'block'"
+    [styles]="{ color: textColor }"
+    [formControl]="form.controls['editor']"
+  >
+  </quill-editor>
+
+  <button
+    nbButton
+    status="info"
+    class="float-left btnSize mr-1"
+    (click)="patchValue()"
+    size="small"
+  >
+    SAVE
+  </button>
+  <!-- <button nbButton status="success" class="float-left btnSize mr-1" (click)="setControl()" size="small">EXECUTE </button> -->
+</form>

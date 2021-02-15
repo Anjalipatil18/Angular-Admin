@@ -1,0 +1,185 @@
+<nb-card class="widthDialog">
+  <nb-card-header class="text-center">Create New User</nb-card-header>
+  <nb-card-body class="inputGroup">
+    <form
+      class="inputGroup"
+      [formGroup]="addForm"
+      (ngSubmit)="getUsers(addForm.value)"
+    >
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >User Name <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            (keyup)="validateUserName($event)"
+            type="text"
+            class="form-control inputForm"
+            formControlName="userName"
+            [ngClass]="{ invalid: submitted && f.firstName.errors }"
+          />
+          <div *ngIf="usernameVaild" class="text-danger">
+            This userName is already registered
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >First Name <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="firstName"
+            [ngClass]="{ invalid: submitted && f.firstName.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Last Name <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="lastName"
+            [ngClass]="{ invalid: submitted && f.lastName.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT">Email <em>*</em></label>
+        <div class="col-md-8">
+          <input
+            (keyup)="validateEmail($event)"
+            type="text"
+            class="form-control inputForm"
+            formControlName="email"
+            [ngClass]="{ invalid: (submitted && f.email.errors) || emailVaild }"
+          />
+          <div *ngIf="emailVaild && !validEmail" class="text-danger">
+            Please enter valid email address
+          </div>
+          <div *ngIf="emailVaild && validEmail" class="text-danger">
+            Email address is already registered with us!
+          </div>
+        </div>
+      </div>
+      <div class="form-group row countryList pr-0">
+        <label class="col-md-4 col-form-label labelT"
+          >Phone Number <em>*</em></label
+        >
+        <div class="col-md-8 row" *ngIf="countries && countries.length > 0">
+          <ng-select
+            class="col-4 pr-0"
+            [items]="countries"
+            bindLabel="name"
+            placeholder="Code"
+            formControlName="countryCode"
+            [(ngModel)]="defaultCountryCode"
+          >
+          </ng-select>
+          <input
+            type="text"
+            placeholder="Phone number"
+            class="form-control inputForm col-8"
+            formControlName="phone"
+            [ngClass]="{ invalid: submitted && f.phone.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Date of Birth <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="text"
+            formControlName="dob"
+            class="form-control inputForm"
+            mwlFlatpickr
+            [dateFormat]="'Y-m-d'"
+            maxDate="{{ maxDate }}"
+          />
+          <!-- <input type="text" class="form-control inputForm" formControlName="dob" [ngClass]="{ invalid: submitted && f.lastName.errors }"> -->
+        </div>
+      </div>
+      <div
+        class="form-group row"
+        *ngIf="countryNames && countryNames.length > 0"
+      >
+        <label class="col-md-4 col-form-label labelT">Country <em>*</em></label>
+        <div class="col-md-8">
+          <ng-select
+            [items]="countryNames"
+            bindLabel="name"
+            placeholder="Country name"
+            formControlName="country"
+            [(ngModel)]="defaultCountryName"
+          >
+          </ng-select>
+          <!-- <input type="text" class="form-control inputForm" formControlName="country" [ngClass]="{ invalid: submitted && f.lastName.errors }"> -->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Password <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="password"
+            class="form-control inputForm"
+            formControlName="password"
+            [ngClass]="{ invalid: submitted && f.password.errors }"
+          />
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT">Profile Image <em>*</em></label>
+        <div class="col-md-8" >
+          <input type="text" class="form-control inputForm" formControlName="profile" [ngClass]="{ invalid: submitted && f.lastName.errors }">
+        </div>
+      </div> -->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Profile image
+          <em>*</em>
+        </label>
+        <div class="col-md-8">
+          <div
+            class="imgLoading"
+            *ngIf="isLoading"
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+          ></div>
+          <span class="imgUpload" *ngIf="!imageGet">
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              class="fileInput"
+              (change)="openDialogs($event, 0)"
+            />
+          </span>
+          <span class="imagsProduct" *ngIf="imagesUrl">
+            <i class="nb-close iconClose" (click)="removeImgs(k, 0)"></i>
+            <img class="imgesList" [src]="imagesUrl.imageLink" />
+          </span>
+        </div>
+        <div class="col-12 text-center text-danger" *ngIf="imgErrMsg">
+          {{ imgErrMsg }}
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button nbButton status="danger" size="small" (click)="cancel()">
+          Cancel
+        </button>
+        <button type="submit" class="ml-1" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

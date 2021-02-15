@@ -1,0 +1,62 @@
+.widthDialog{
+    // max-width: 600px;
+    // max-height: 600px;
+    // width: 900px;
+}
+.dragDropData {
+    height: 100%;
+}
+.iconArrow {
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.widthDialog {
+    max-width: 1000px !important;
+    max-height: 1000px !important;
+    width: 1000px !important;
+}
+
+// modal styling
+// .cdk-overlay-pane {
+//     width: 100% !important;
+// }
+// nb-dialog-container {
+//     width: 100%;
+// }
+// nb-card {
+//     max-width: 1000px !important;
+//     max-height: 1000px !important;
+//     width: 1000px !important;
+//     // width: 100%;
+// }
+// .UserEventData{
+//     height: 100px !important;
+//     overflow: auto !important;
+// }
+// .cdk-overlay-container .cdk-global-overlay-wrapper {
+//     background-color: #ee82ee4a!important;
+// }
+
+
+// .cdk-global-overlay-wrapper {
+//     background: #00000070;
+// }
+// .cdk-global-overlay-wrapper .cdk-overlay-pane {
+//     width: 100%;
+// }
+// .cdk-global-overlay-wrapper .cdk-overlay-pane nb-dialog-container {
+//     width: 100%;
+// }
+// .cdk-global-overlay-wrapper .cdk-overlay-pane nb-dialog-container nb-card {
+//     max-width: 1000px !important;
+//     max-height: 1000px !important;
+//     width: 1000px !important;
+// }
+// .cdk-global-overlay-wrapper .cdk-overlay-pane nb-dialog-container nb-card .widthDialog {
+//     max-width: 1000px !important;
+//     max-height: 1000px !important;
+//     width: 1000px !important;
+// }

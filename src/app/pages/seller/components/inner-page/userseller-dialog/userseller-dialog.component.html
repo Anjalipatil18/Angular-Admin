@@ -1,0 +1,143 @@
+<nb-card class="widthDialog">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup" *ngIf="content">
+    <div class="form-group col-md-12" style="text-align: center;">
+      <img
+        class="userImgs m-auto w-50"
+        *ngIf="content.profilePic"
+        [src]="content.profilePic"
+      />
+      <img
+        class="userImgs m-auto"
+        *ngIf="!content.profilePic"
+        src="../../../../../../assets/images/defaultPerson.png"
+      />
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >User Name:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.username ? content.username : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >First Name:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.firstName ? content.firstName : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Last Name:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.lastName ? content.lastName : 'N/A'
+      }}</label>
+    </div>
+    <!-- <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Date of Birth:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.dateOfBirth | date:'medium'}}</label>          
+      </div> -->
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Email:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.email ? content.email : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Phone:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.phoneNumber ? content.countryCode + content.phoneNumber : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >ID Proof:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.idProof ? content.docs : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Address Proof:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.addressProof ? content.addressProof : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Driving License:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.DL ? content.DL : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Languages Known:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.languages ? content.languages : 'N/A'
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >About Me:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.about ? content.about : 'N/A'
+      }}</label>
+    </div>
+    <!-- <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Creation On:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.creationDate | date:'medium'}}</label>               
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Referral Code:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.promoter.referralCode}}</label>               
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Country:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.address[0].Country}}</label>          
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Postal Code:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.address[0].postCode}}</label>          
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">State:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.address[0].state}}</label>          
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">City:</label>
+        <label class="col-md-8 col-form-label labelT">{{content.address[0].City}}</label>          
+      </div> -->
+    <!-- <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Gmail Verified:</label>
+        <label class="col-md-8 col-form-label labelT" *ngIf="content.loginVerifiredBy.gmailVerified">Yes</label>
+        <label class="col-md-8 col-form-label labelT" *ngIf="!content.loginVerifiredBy.gmailVerified">No</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Facebook Verified:</label>
+        <label class="col-md-8 col-form-label labelT" *ngIf="content.loginVerifiredBy.facebookVerified">Yes</label>
+        <label class="col-md-8 col-form-label labelT" *ngIf="!content.loginVerifiredBy.facebookVerified">No</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT font-weight-bold">Phone Verified:</label>
+        <label class="col-md-8 col-form-label labelT" *ngIf="content.loginVerifiredBy.phoneNumberVerified">Yes</label>
+        <label class="col-md-8 col-form-label labelT" *ngIf="!content.loginVerifiredBy.phoneNumberVerified">No</label>
+      </div> -->
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+  </nb-card-footer>
+</nb-card>

@@ -1,0 +1,109 @@
+<div
+  class="tableListEdit col-12 p-0"
+  *ngIf="langSelectors && langSelectors.length > 0"
+>
+  <!-- <i class="nb-arrow-thin-left iconArrow" (click)="back()"></i> -->
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+  <nb-card class="p-4">
+    <form
+      class="inputGroup col-xl-8 p-0"
+      [formGroup]="addUserForm"
+      (ngSubmit)="getUsers(addUserForm.value)"
+    >
+      <div
+        class="form-group row"
+        [hidden]="!list.active"
+        *ngFor="let list of langSelectors; let i = index"
+      >
+        <label class="col-md-3 col-form-label labelT"
+          >Title ({{ list.language }}) <em>*</em></label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="{{ list.languageCode }}"
+            [ngClass]="{
+              invalid:
+                submitted && addUserForm.controls[list.languageCode].errors
+            }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Title Tag <em>*</em></label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="titleTag"
+            [ngClass]="{ invalid: submitted && f.titleTag.errors }"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Attributes <em>*</em></label
+        >
+        <div class="col-md-9">
+          <ngx-select-dropdown
+            tabindex="0"
+            [multiple]="true"
+            formControlName="attributesIds"
+            [config]="config"
+            [options]="attributeList"
+            [ngClass]="{ invalid: submitted && f.attributesIds.errors }"
+          ></ngx-select-dropdown>
+
+          <!-- <nb-select multiple placeholder="Select Attributes" formControlName="attributesIds" [ngClass]="{ invalid: submitted && f.attributesIds.errors }">        
+        <nb-option [value]="list.id" *ngFor="let list of attributeList">{{list.title.en}} <small>({{list.titleTag}})</small></nb-option>
+      </nb-select> -->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Icon</label>
+        <div class="col-md-9">
+          <div
+            class="imgLoading"
+            *ngIf="isLoadingIcon"
+            [nbSpinner]="isLoadingIcon"
+            nbSpinnerStatus="primary"
+          ></div>
+          <img
+            class="userImgEdit"
+            *ngIf="profilePicIcon"
+            [src]="profilePicIcon"
+          />
+          <!-- <input type="file" class="inputForm border-0" accept="image/*" (change)="uploadIconFile($event)"> -->
+          <input
+            type="file"
+            id="uploadSellInput"
+            name="image"
+            accept="image/*"
+            class="inputForm border-0"
+            (change)="uploadIconFile($event)"
+            ng2FileSelect
+            [uploader]="uploader"
+            multiple
+          />
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button type="submit" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card>
+</div>

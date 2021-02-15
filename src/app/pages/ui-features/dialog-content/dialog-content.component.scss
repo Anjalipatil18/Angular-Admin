@@ -1,0 +1,35 @@
+
+.widthDialog{
+    width: 600px;
+    max-width: 600px;
+}
+@media only screen and(max-width:767px){
+    .widthDialog{
+        width: 100%;
+    } 
+}
+.inputGroup{
+    .inputForm {    
+        border: 1px solid #dadfe6;
+        color: #2a2a2ad4;
+        height: 40px;
+    }
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef !important;
+  }
+
+::ng-deep{    
+    nb-select button.btn-primary {
+      background: #fff !important;
+      color: #2a2a2ad4 !important;
+      border: 1px solid #dadfe6 !important; 
+      font-weight: 400  !important;
+      height: 40px;
+      padding: 0rem 1rem !important;   
+    }
+    .nb-theme-default nb-card.select.primary{
+        border: 1px solid #dadfe6 !important; 
+      }
+}

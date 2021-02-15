@@ -1,0 +1,72 @@
+.widthDialog{
+    max-width: 600px;
+    max-height: 600px;
+    width: 600px;
+ }
+ ::ng-deep{    
+    nb-select button.btn-primary {
+      background: #fff !important;
+      color: #2a2a2ad4 !important;
+      border: 1px solid #dadfe6 !important; 
+      font-weight: 400  !important;
+      height: 40px;
+      padding: 0rem 1rem !important;   
+    }
+    .nb-theme-default nb-card.select.primary{
+        border: 1px solid #dadfe6 !important; 
+    }
+    nb-select.invalid button.btn-primary {
+      border-color:tomato !important;
+    }
+    .ng-touched .ng-valid.invalid{
+        border-color: tomato !important;
+    }
+}
+
+.imgUpload {    
+  background-size: cover;
+  width: 100px;
+  height: 100px;
+  display: block;
+  float: left;
+.fileInput{
+  width: 100px;
+  height: 100px;    
+  opacity: 0;
+  cursor: pointer;    
+  display: inline-block;
+  color: transparent;
+}
+}
+
+.imagsProduct {
+  display: block;
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin-left: 5px;
+  position: relative;
+  .imgesList{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+}
+
+.imgLoading {
+  height: 100px;
+  position: absolute;
+  top: 0;
+  z-index: 99999999;
+  width: 125px;
+}
+
+.nb-close.iconClose {
+  position: absolute;
+  right: 0;
+  color: tomato;
+  font-size: 1.2rem;
+  z-index: 5;
+  cursor: pointer;
+  top: 0px;
+}

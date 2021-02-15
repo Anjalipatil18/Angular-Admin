@@ -1,0 +1,43 @@
+<nb-card class="widthDialog" *ngIf="!action">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup" *ngIf="content">
+    <!-- <div class="form-group col-md-12 row" >
+          <img class="userImgs" [src]="content.images.website">
+        </div> -->
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Attribute Group:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.title.en
+      }}</label>
+    </div>
+    <div
+      class="col-12"
+      *ngIf="content.attributes && content.attributes.length > 0"
+    >
+      <div class="row text-center">
+        <span class="col-md-4 p-2 border col-form-label labelT font-weight-bold"
+          >Seq Id</span
+        >
+        <span class="col-md-8 p-2 border col-form-label labelT font-weight-bold"
+          >Attribute Name</span
+        >
+      </div>
+      <div
+        class="row text-center"
+        *ngFor="let list of content.attributes; let i = index"
+      >
+        <span class="col-md-4 p-2 border col-form-label labelT">{{
+          i + 1
+        }}</span>
+        <span class="col-md-8 p-2 border col-form-label labelT">{{
+          list.attrName
+        }}</span>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+  </nb-card-footer>
+</nb-card>

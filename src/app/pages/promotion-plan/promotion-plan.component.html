@@ -1,0 +1,16 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Plans">
+        <app-active-promotion-plan
+          *ngIf="tabList == 'Active Plans'"
+        ></app-active-promotion-plan>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Plans">
+        <app-deleted-promotion-plan
+          *ngIf="tabList == 'Deleted Plans'"
+        ></app-deleted-promotion-plan>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

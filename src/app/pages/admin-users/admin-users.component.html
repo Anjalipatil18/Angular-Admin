@@ -1,0 +1,17 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Users">
+        <app-users *ngIf="tabList == 'Users'"></app-users>
+      </nb-tab>
+      <nb-tab tabTitle="Roles">
+        <app-role *ngIf="tabList == 'Roles'"></app-role>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Users">
+        <app-deleted-users
+          *ngIf="tabList == 'Deleted Users'"
+        ></app-deleted-users>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

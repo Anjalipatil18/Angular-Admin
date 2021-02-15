@@ -1,0 +1,31 @@
+.columnLayout{
+    padding: 2.25rem 2.25rem 0.75rem;
+}
+
+::ng-deep{
+    .custom-bread-crumb {
+        box-shadow: 0 2px 12px 0 #dfe3eb;
+        padding: 1.25rem !important;
+        background: #ffffff !important;        
+        margin: 0;
+        border-radius: 0;        
+        span{
+            color:rgb(2, 117, 216) !important;
+        }
+    }
+    .menu-item .ion {
+        border: solid #c5c5c5;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 3px;
+        transition: 0.5s all ease-in-out;
+    }
+    .menu-item .ion.ion-chevron-down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
+    .menu-item .ion.ion-chevron-left {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
+}

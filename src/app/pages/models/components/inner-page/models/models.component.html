@@ -1,0 +1,154 @@
+<nb-card>
+  <div class="tableList col-12">
+    <div class="searchListContent row m-0 col-12 my-3 p-0">
+      <div class="searchListContent col-md-5 my-3 p-0">
+        <label>Search By </label>
+        <input
+          type="text"
+          nbInput
+          class="searchInput"
+          placeholder="Model Name"
+          value=""
+          #sTax
+          (keyup)="searchVerifiedActive(sTax.value)"
+        />
+      </div>
+      <div class="col-md-7 my-3 p-0">
+        <button
+          nbButton
+          status="info"
+          class="float-right btnSize"
+          size="small"
+          routerLink="../../../../update-models/{{ modelName }}/{{ likeId }}/{{
+            status
+          }}/1"
+        >
+          Add
+        </button>
+        <button
+          nbButton
+          status="info"
+          class="float-right btnSize mr-1"
+          size="small"
+          [disabled]="statusId && statusId.length == 0"
+          (click)="deleteModels(2)"
+        >
+          Activate
+        </button>
+        <button
+          nbButton
+          status="danger"
+          class="float-right btnSize mr-1"
+          size="small"
+          [disabled]="statusId && statusId.length == 0"
+          (click)="deleteModels(4)"
+        >
+          Deactivate
+        </button>
+      </div>
+    </div>
+
+    <ngx-datatable
+      #table
+      class="bootstrap col-12 p-0"
+      [rowHeight]="'auto'"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [rows]="userActiveData.length > 0 ? userActiveData : userActive"
+      [limit]="10"
+      [footerHeight]="40"
+      [count]="totRecords"
+      [externalPaging]="false"
+      (page)="getAllModels($event)"
+    >
+      <ngx-datatable-column name="SL.No">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>
+            {{ rowIndex + 1 }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Reviewer Name">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.likeDetails.timestamp | date:'medium' }}</span>
+      </ng-template>
+    </ngx-datatable-column>   -->
+      <ngx-datatable-column name="Model Name">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>{{ row.name && row.name.en ? row.name.en : 'N/A' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Status">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>{{ row.status === 'activate' ? 'Active' : 'Deactive' }} </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <nb-checkbox
+            class="col-md-2 p-0"
+            (change)="reportCheckbox($event, row._id)"
+            >{{ row.checkbox }}</nb-checkbox
+          >
+          <i
+            class="nb-edit iconNb text-info"
+            [routerLink]="[
+              '../../../../update-models',
+              modelName,
+              likeId,
+              status,
+              row._id
+            ]"
+          ></i>
+        </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Country">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.likeDetails.country?row.likeDetails.country:'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Ip address">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.likeDetails.ip?row.likeDetails.ip:'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Lat Long">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{  row.likeDetails.lat? row.likeDetails.lat:'N/A' }}, {{  row.likeDetails.long? row.likeDetails.long:'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column> -->
+    </ngx-datatable>
+  </div>
+</nb-card>

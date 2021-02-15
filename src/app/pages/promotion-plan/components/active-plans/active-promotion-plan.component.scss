@@ -1,0 +1,40 @@
+.tableList {
+  .userImg {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .titleLink {
+    // cursor: pointer;
+    // color: #418fdb;
+    // text-decoration: underline;
+    font-size: 13px;
+  }
+}
+
+.searchListContent button.btnSize {
+  width: 90px;
+  padding: 10px 5px !important;
+  position: relative;
+  top: 28px;
+}
+
+:host::ng-deep {
+  nb-checkbox .customised-control {
+    padding: 0 !important;
+  }
+
+  nb-select button.btn-primary,
+  .ngx-dropdown-container .ngx-dropdown-button {
+    background: #fff !important;
+    color: #2a2a2ad4 !important;
+    border: 1px solid #dadfe6 !important;
+    font-weight: 400 !important;
+    height: 40px;
+    padding: 0rem 1rem !important;
+  }
+  .nb-theme-default nb-card.select.primary {
+    border: 1px solid #dadfe6 !important;
+  }
+}

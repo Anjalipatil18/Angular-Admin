@@ -1,0 +1,47 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <!-- <nb-tab tabTitle="Active Promotors">
+        <app-active-promotors *ngIf="tabList == 'Active Promotors'"></app-active-promotors>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Promotors">
+        <app-deleted-promotors *ngIf="tabList == 'Deleted Promotors'"></app-deleted-promotors>
+      </nb-tab> -->
+      <!-- <nb-tab tabTitle="Deactivated Tags">
+        <app-deactivated-promotors *ngIf="tabList == 'Deactivated Tags'"></app-deactivated-promotors>
+      </nb-tab> -->
+      <!-- <nb-tab tabTitle="Suspended Promotors">
+        <app-suspended-promotors *ngIf="tabList == 'Suspended Promotors'"></app-suspended-promotors>
+      </nb-tab>
+      <nb-tab tabTitle="Reported Promotors">
+        <app-reported-promotors *ngIf="tabList == 'Reported Promotors'"></app-reported-promotors>
+      </nb-tab>     -->
+
+      <nb-tab tabTitle="New Requests">
+        <app-active-promotors
+          *ngIf="tabList == 'New Requests'"
+        ></app-active-promotors>
+      </nb-tab>
+      <nb-tab tabTitle="Approved">
+        <app-reported-promotors
+          *ngIf="tabList == 'Approved'"
+        ></app-reported-promotors>
+      </nb-tab>
+      <nb-tab tabTitle="Denied">
+        <app-deactivated-promotors
+          *ngIf="tabList == 'Denied'"
+        ></app-deactivated-promotors>
+      </nb-tab>
+      <nb-tab tabTitle="Suspended">
+        <app-suspended-promotors
+          *ngIf="tabList == 'Suspended'"
+        ></app-suspended-promotors>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted">
+        <app-deleted-promotors
+          *ngIf="tabList == 'Deleted'"
+        ></app-deleted-promotors>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

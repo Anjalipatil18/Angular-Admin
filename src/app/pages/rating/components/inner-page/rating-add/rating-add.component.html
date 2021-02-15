@@ -1,0 +1,718 @@
+<div class="tableListEdit col-12 p-0">
+  <!-- <div class="listCheckboxes mb-5">        
+        <nb-checkbox [disabled]="list.languageCode == 'en'" [value]="list.active" (change)="reportCheckbox($event, i, list.languageCode)" *ngFor="let list of langSelectors; let i = index;">{{list.language}}</nb-checkbox> 
+    </div> -->
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-8 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="getUsers(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div class="form-group row" *ngIf="listUsers && listUsers.length > 0">
+        <label class="col-md-3 col-form-label labelT">User <em>*</em></label>
+        <div class="col-md-9">
+          <ngx-select-dropdown
+            tabindex="0"
+            [multiple]="false"
+            formControlName="userId"
+            [config]="config"
+            [options]="listUsers"
+            [ngClass]="{ invalid: submitted && f.userId.errors }"
+          ></ngx-select-dropdown>
+          <!-- <nb-select  placeholder="Select Type" formControlName="userId" [ngClass]="{ invalid: submitted && f.userId.errors }">
+                <nb-option [value]="list" *ngFor="let list of listUsers; let i = index">{{list._source.firstName}} {{list._source?.lastName}}({{list._source?.email}}, {{list._source?.phoneNumber}})</nb-option>          
+              </nb-select> -->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Title <em>*</em></label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="Title"
+            formControlName="title"
+            [ngClass]="{ invalid: submitted && f.title.errors }"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Price <em>*</em></label>
+        <div class="col-md-9 input-group full-width currency">
+          <!-- <nb-select  placeholder="Currency" (selectedChange)="selectCurrency($event)">
+                <nb-option [value]="list.currency[0].symbol" *ngFor="let list of currencies; let i = index">{{list.currency[0].symbol}}</nb-option>          
+              </nb-select> -->
+          <ng-select
+            [items]="currencies"
+            bindLabel="name"
+            placeholder="Currency"
+            formControlName="currency"
+            [(ngModel)]="currencySymbol"
+          >
+          </ng-select>
+          <!-- <div class="input-group-addon border py-2 px-3 boxHeight">
+                $
+              </div> -->
+          <input
+            type="number"
+            min="0"
+            class="form-control inputForm"
+            placeholder="Price"
+            formControlName="price"
+            [ngClass]="{ invalid: submitted && f.price.errors }"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Location <em>*</em></label
+        >
+        <div class="col-md-9">
+          <!-- <input type="text" class="form-control inputForm" placeholder="Location" formControlName="title" > -->
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="location"
+            placeholder="Location"
+            id="locatFill"
+            (keyup)="locationSearch($event)"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >List In Marketplace</label
+        >
+        <div class="col-md-9">
+          <ui-switch formControlName="marketplace"></ui-switch>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Images <em>*</em></label>
+        <div class="col-md-9">
+          <div
+            class="imgLoading"
+            *ngIf="isLoading"
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+          ></div>
+          <span class="imgUpload">
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              class="fileInput"
+              (change)="openDialogs($event)"
+            />
+          </span>
+          <span
+            class="imagsProduct"
+            *ngFor="let img of imagesUrl; let k = index"
+          >
+            <i class="nb-close iconClose" (click)="removeImgs(k)"></i>
+            <img class="imgesList" [src]="img.imageLink" />
+          </span>
+        </div>
+        <div class="col-12 text-center text-danger" *ngIf="imgErrMsg">
+          {{ imgErrMsg }}
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="listAsset && listAsset.length > 0">
+        <label class="col-md-3 col-form-label labelT"
+          >Asset Type <em>*</em></label
+        >
+        <div class="col-md-9">
+          <nb-select
+            placeholder="Select Type"
+            (selectedChange)="getAsset($event)"
+            formControlName="assetTypeId"
+            [ngClass]="{ invalid: submitted && f.assetTypeId.errors }"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of listAsset; let i = index"
+              >{{ list.title.en }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listSubAsset && listSubAsset.length > 0"
+      >
+        <label class="col-md-3 col-form-label labelT"
+          >Asset Sub Type <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <nb-select
+            placeholder="Select Type"
+            (selectedChange)="getSubAsset($event)"
+            formControlName="assetSubtypeId"
+            [ngClass]="{ invalid: submitted && f.assetSubtypeId.errors }"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of listSubAsset; let i = index"
+              >{{ list.title.en }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+
+      <div
+        class="form-group row"
+        *ngIf="listSubSubAsset && listSubSubAsset.length > 0"
+      >
+        <label class="col-md-3 col-form-label labelT"
+          >Asset sub sub Type <em>*</em></label
+        >
+        <div class="col-md-9">
+          <nb-select
+            placeholder="Select Type"
+            (selectedChange)="getSubSubAsset($event)"
+            formControlName="assetSubSubTypeId"
+            [ngClass]="{ invalid: submitted && f.assetSubSubTypeId.errors }"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of listSubSubAsset; let i = index"
+              >{{ list.title.en }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+    </nb-card>
+
+    <div
+      class="attributrGroupList col-12 p-0"
+      *ngIf="listGroup && listGroup.length > 0"
+    >
+      <div
+        class="col-12 groupList form-group p-0"
+        *ngFor="let group of listGroup; let i = index"
+      >
+        <nb-card class="p-0">
+          <nb-card-header class="text-center text-info text-capitalize">{{
+            group.title.en
+          }}</nb-card-header>
+          <div class="attributeList col-12 p-3">
+            <div
+              class="contentList col-12"
+              *ngFor="let list of group.attributes; let j = index"
+            >
+              <!-- <div class="form-group row" *ngIf="list.typeCode == 1">
+                      <label class="col-md-3 col-form-label labelT">{{list.title.en}} <em *ngIf="list.mandatory">*</em></label>
+                      <div class="col-md-9" >
+                        <input type="text" class="form-control inputForm" value="{{list?.value_1}}" placeholder="Text Box" (keyup)="groupTextList($event, i, j)" (change)="groupTextList($event, i, j)">
+                      </div>
+                      <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div>
+                    </div> -->
+
+              <div class="form-group row" *ngIf="list.typeCode == 1">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em>
+                </label>
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    maxLength="{{ list.valueMax.en | number: '1.0-0' }}"
+                    minLength="{{ list.valueMin.en | number: '1.0-0' }}"
+                    class="form-control inputForm"
+                    value="{{ list?.value_1 }}"
+                    placeholder="Text Box"
+                    (keyup)="groupTextList($event, i, j)"
+                    (change)="groupTextList($event, i, j)"
+                  />
+                  <span
+                    [ngClass]="{
+                      maxchar: list.colorCode === 0,
+                      'text-danger': list.colorCode === 1,
+                      'text-success': list.colorCode === 2
+                    }"
+                    >Min Char = {{ list.valueMin.en | number: '1.0-0' }}, Max
+                    Char = {{ list.valueMax.en | number: '1.0-0' }}</span
+                  >
+                </div>
+                <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+              </div>
+
+              <!-- <div class="form-group row" *ngIf="list.typeCode == 2">
+                      <label class="col-md-3 col-form-label labelT">{{list.title.en}}<em *ngIf="list.mandatory">*</em></label>
+                      <div class="col-md-9" >
+                        <textarea rows="4" class="form-control inputForm" value="{{list?.value_2}}" placeholder="Text Area" (keyup)="groupTextList($event, i, j)" (change)="groupTextList($event, i, j)"></textarea>
+                      </div>
+                      <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div>
+                  </div> -->
+              <div class="form-group row" *ngIf="list.typeCode == 2">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }}
+                  <em *ngIf="list.mandatory">*</em>
+                </label>
+                <div class="col-md-9">
+                  <textarea
+                    rows="4"
+                    maxLength="{{ list.valueMax.en | number: '1.0-0' }}"
+                    minLength="{{ list.valueMin.en | number: '1.0-0' }}"
+                    class="form-control inputForm"
+                    value="{{ list?.value_2 }}"
+                    placeholder="Text Area"
+                    (keyup)="groupTextList($event, i, j)"
+                    (change)="groupTextList($event, i, j)"
+                  ></textarea>
+                  <span
+                    [ngClass]="{
+                      maxchar: list.colorCode === 0,
+                      'text-danger': list.colorCode === 1,
+                      'text-success': list.colorCode === 2
+                    }"
+                    >Min Char = {{ list.valueMin.en | number: '1.0-0' }}, Max
+                    Char = {{ list.valueMax.en | number: '1.0-0' }}</span
+                  >
+                </div>
+                <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+              </div>
+
+              <div class="form-group row" *ngIf="list.typeCode == 3">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <ng5-slider
+                    [options]="
+                      rangeValidation(list.valueMin.en, list.valueMax.en)
+                    "
+                    [(value)]="
+                      list.value_3 ? list.value_3.min : list.valueMin.en
+                    "
+                    [(highValue)]="
+                      list.value_3 ? list.value_3.max : list.valueMax.en
+                    "
+                    (userChange)="
+                      onRangeChange(
+                        $event,
+                        i,
+                        j,
+                        list.valueMin.en,
+                        list.valueMax.en
+                      )
+                    "
+                  ></ng5-slider>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 4">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <nb-checkbox
+                    *ngFor="let checkBox of list.values.en"
+                    [value]="list?.value_4 == checkBox"
+                    (change)="groupCheckBox($event, checkBox, i, j)"
+                    >{{ checkBox }}</nb-checkbox
+                  >
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 5">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <nb-radio-group>
+                    <nb-radio
+                      class="d-inline-block"
+                      [checked]="list?.value_5 == radioBox"
+                      [value]="radioBox"
+                      (valueChange)="groupChangeSelect($event, i, j)"
+                      *ngFor="let radioBox of list.values.en"
+                      >{{ radioBox }}</nb-radio
+                    >
+                  </nb-radio-group>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 6">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <nb-select
+                    placeholder="Select Type"
+                    selected="{{ list?.value_6 }}"
+                    (selectedChange)="groupChangeSelect($event, i, j)"
+                  >
+                    <nb-option
+                      [value]="dropBox"
+                      *ngFor="let dropBox of list.values.en"
+                      >{{ dropBox }}</nb-option
+                    >
+                  </nb-select>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 7">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    class="form-control inputForm"
+                    value="{{ list?.value_7 }}"
+                    placeholder="Location"
+                    id="locatFill{{ i }}{{ j }}"
+                    (keyup)="locationSearch($event, i, j)"
+                  />
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 8">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9 input-group full-width">
+                  <div
+                    class="input-group-addon boxHeight border py-2 px-3"
+                    (click)="plusMinus(-1, i, j)"
+                  >
+                    -
+                  </div>
+                  <input
+                    type="number"
+                    min="1"
+                    class="form-control inputForm"
+                    value="{{ list?.value_8 }}"
+                    placeholder="+/- controller"
+                    readonly
+                  />
+                  <div
+                    class="input-group-addon border boxHeight py-2 px-3"
+                    (click)="plusMinus(1, i, j)"
+                  >
+                    +
+                  </div>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 9">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9 input-group full-width units">
+                  <!-- <div class="input-group-addon border py-2 px-3 boxHeight">$</div> -->
+                  <ng-select
+                    [items]="unitsList"
+                    bindLabel="name"
+                    placeholder="Units"
+                    formControlName="units"
+                    class="col-5 p-0"
+                    [(ngModel)]="list.numericalType.en.name"
+                  >
+                  </ng-select>
+                  <!-- <ng-select [items]="currencies"
+                            bindLabel="name"
+                            placeholder="Currency"
+                            formControlName="currency"
+                            >
+                          </ng-select> -->
+                  <!-- <ng-select [items]="unitsList"
+                            bindLabel="name"
+                            placeholder="Numeric"
+                            formControlName="numericalType_{{list.languageCode}}"
+                            >
+                          </ng-select> -->
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control inputForm"
+                    value="{{ list?.value_9 }}"
+                    placeholder="Numeric"
+                    (keyup)="groupTextList($event, i, j)"
+                    (change)="groupTextList($event, i, j)"
+                  />
+                  <!-- <input type="number" min="0" class="form-control inputForm col-7"  value="{{list?.value_9}}" placeholder="Numeric" (keyup)="groupTextList($event, i, j)" (change)="groupTextList($event, i, j)"> -->
+                  <span
+                    class="col-9"
+                    [ngClass]="{
+                      maxchar: list.colorCode === 0,
+                      'text-danger': list.colorCode === 1,
+                      'text-success': list.colorCode === 2
+                    }"
+                    >Min {{ numericalType(list.numericalType.en.name) }} =
+                    {{ list.valueMin.en | number: '1.0-0' }}, Max
+                    {{ numericalType(list.numericalType.en.name) }} =
+                    {{ list.valueMax.en | number: '1.0-0' }}</span
+                  >
+                </div>
+                <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 10">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    class="form-control inputForm"
+                    value="{{ list?.value_10 }}"
+                    (change)="groupTextList($event, i, j)"
+                    mwlFlatpickr
+                    [enableTime]="true"
+                    [dateFormat]="'Y-m-d H:i'"
+                  />
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 11">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    class="form-control inputForm"
+                    value="{{ list?.value_11 }}"
+                    (change)="groupTextList($event, i, j)"
+                    mwlFlatpickr
+                    [dateFormat]="'Y-m-d'"
+                  />
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 12">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <input
+                    [owlDateTimeTrigger]="dt12"
+                    class="form-control inputForm"
+                    [owlDateTime]="dt12"
+                    [value]="list?.values_12"
+                  />
+                  <owl-date-time
+                    [pickerType]="'calendar'"
+                    [startView]="'multi-years'"
+                    (yearSelected)="chosenYearHandler($event, dt12, i, j)"
+                    #dt12
+                  ></owl-date-time>
+                  <!-- <input type="text" class="form-control inputForm"  value="{{list?.value_12}}" (change)="groupTextList($event, i, j)" mwlFlatpickr [dateFormat]="'Y'"> -->
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 13">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <div
+                    class="imgLoading"
+                    *ngIf="list.isLoading"
+                    [nbSpinner]="list.isLoading"
+                    nbSpinnerStatus="primary"
+                  ></div>
+                  <span class="imgUpload">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      class="fileInput"
+                      (change)="fileChangeEvent($event, i, j)"
+                    />
+                  </span>
+                  <span
+                    class="imagsProduct"
+                    *ngFor="let img of list.value_13; let k = index"
+                  >
+                    <i
+                      class="nb-close iconClose"
+                      (click)="removeImg(i, j, k)"
+                    ></i>
+                    <img class="imgesList" [src]="img.imageLink" />
+                  </span>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 14">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }}<em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <div
+                    class="imgLoading"
+                    *ngIf="list.isLoading"
+                    [nbSpinner]="list.isLoading"
+                    nbSpinnerStatus="primary"
+                  ></div>
+                  <span class="imgUpload">
+                    <input
+                      type="file"
+                      accept="video/*"
+                      class="fileInput"
+                      (change)="videoChangeEvent($event, i, j)"
+                    />
+                  </span>
+                  <span
+                    class="imagsProduct"
+                    *ngFor="let video of list.value_14; let k = index"
+                  >
+                    <i
+                      class="nb-close iconClose"
+                      (click)="removeImg(i, j, k)"
+                    ></i>
+                    <video class="imgesList" controls>
+                      <source [src]="video.videoLink" type="video/mp4" />
+                      <source [src]="video.videoLink" type="video/ogg" />
+                    </video>
+                  </span>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="list.typeCode == 15">
+                <label class="col-md-3 col-form-label labelT"
+                  >{{ list.title.en }} <em *ngIf="list.mandatory">*</em></label
+                >
+                <div class="col-md-9">
+                  <ui-switch
+                    [checked]="list.value_15 ? true : false"
+                    (valueChange)="groupChangeSelect($event, i, j)"
+                  ></ui-switch>
+                </div>
+                <div class="col-12 text-center text-danger" *ngIf="list.errMsg">
+                  {{ list.errMsg }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </nb-card>
+      </div>
+    </div>
+
+    <!-- <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Text Box <em>*</em></label>
+        <div class="col-md-9" >
+          <input type="text" class="form-control inputForm" placeholder="Text Box">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Text Area <em>*</em></label>
+        <div class="col-md-9" >
+          <textarea rows="3" class="form-control inputForm" placeholder="Text Area"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label labelT">Range Slider <em>*</em></label>
+      <div class="col-md-9" >         
+          <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+      </div>
+    </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Check Box <em>*</em></label>
+        <div class="col-md-9" >
+          <nb-checkbox>Type 1</nb-checkbox> 
+          <nb-checkbox>Type 2</nb-checkbox> 
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Radio Button <em>*</em></label>
+        <div class="col-md-9" >
+          <nb-radio-group>
+            <nb-radio class="d-inline-block">Type 1</nb-radio>
+            <nb-radio class="d-inline-block">Type 2</nb-radio>
+          </nb-radio-group>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Drop Down <em>*</em></label>
+        <div class="col-md-9" >
+          <nb-select  placeholder="Select Type">
+            <nb-option>Type 1</nb-option>          
+            <nb-option>Type 2</nb-option>          
+          </nb-select>
+        </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label labelT">Location <em>*</em></label>
+      <div class="col-md-9" >
+        <input type="text" class="form-control inputForm" placeholder="Location" id="locatFill" (keyup)="locationSearch()">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label labelT">+/- controller <em>*</em></label>
+      <div class="col-md-9 input-group full-width" >
+        <div class="input-group-addon boxHeight border py-2 px-3" (click)="plusMinus(-1)">-</div>
+          <input type="number" min="0" class="form-control inputForm" formControlName="controller" placeholder="+/- controller">
+        <div class="input-group-addon border boxHeight py-2 px-3" (click)="plusMinus(1)">+</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label labelT">Currency <em>*</em></label>
+      <div class="col-md-9 input-group full-width">             
+            <div class="input-group-addon border py-2 px-3 boxHeight">$</div>
+            <input type="number" min="0" class="form-control inputForm" placeholder="Currency">          
+      </div>
+    </div>   
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label labelT">Image Upload <em>*</em></label>
+    <div class="col-md-9" >
+      <span class="imagsProduct" *ngFor="let img of imgUrl">
+        <img class="imgesList" [src]="img">
+      </span>
+      <span class="imgUpload">
+        <input type="file" accept="image/*" class="fileInput" (change)="fileChangeEvent($event)">
+      </span>
+    </div>
+  </div>
+  <div class="form-group row">
+  <label class="col-md-3 col-form-label labelT">Video Upload<em>*</em></label>
+  <div class="col-md-9">
+    <span class="imgUpload">
+        <input type="file" accept="video/*" class="fileInput">
+    </span>
+  </div>
+  </div>
+  <div class="form-group row">
+  <label class="col-md-3 col-form-label labelT">True/False Toggle <em>*</em></label>
+  <div class="col-md-9" >
+      <ui-switch></ui-switch> 
+  </div>
+</div> -->
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+  <!-- </nb-card> -->
+</div>

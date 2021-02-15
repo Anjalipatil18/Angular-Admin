@@ -1,0 +1,34 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active & Verified">
+        <app-users-active-verified
+          *ngIf="tabList == 'Active & Verified'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-users-active-verified>
+      </nb-tab>
+      <nb-tab tabTitle="Suspended">
+        <app-users-suspended
+          *ngIf="tabList == 'Suspended'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-users-suspended>
+      </nb-tab>
+      <nb-tab tabTitle="Unverified">
+        <app-users-unverified
+          *ngIf="tabList == 'Unverified'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-users-unverified>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted">
+        <app-users-deleted
+          *ngIf="tabList == 'Deleted'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-users-deleted>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

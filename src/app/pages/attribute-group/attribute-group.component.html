@@ -1,0 +1,20 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Groups">
+        <app-active-group
+          *ngIf="tabList == 'Active Groups'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-active-group>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Groups">
+        <app-deleted-group
+          *ngIf="tabList == 'Deleted Groups'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-deleted-group>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

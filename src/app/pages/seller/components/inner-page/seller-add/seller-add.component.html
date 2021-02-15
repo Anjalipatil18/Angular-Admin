@@ -1,0 +1,501 @@
+<div class="tableListEdit col-12 p-0">
+  <form
+    class="inputGroup col-xl-8 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="sellerSubmit(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div class="form-group row" *ngIf="listUsers && listUsers.length > 0">
+        <label class="col-md-3 col-form-label labelT">User <em>*</em></label>
+        <div class="col-md-9 row userDetails">
+          <ngx-select-dropdown
+            class="col-10"
+            tabindex="0"
+            [multiple]="false"
+            formControlName="userId"
+            #dataval
+            [config]="config"
+            [options]="listUsers"
+            [ngClass]="{ invalid: submitted && f.userId.errors }"
+            (change)="getChangeValueSellerData(dataval.value)"
+          ></ngx-select-dropdown>
+          <span
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+            nbButton
+            class="btn btn-info col-2"
+            (click)="openNewUserDialog()"
+            >Add</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >First Name
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <input
+            disabled
+            type="text"
+            class="form-control inputForm"
+            [(ngModel)]="existingSellerFirstName"
+            placeholder="First Name"
+            formControlName="firstName"
+            [ngClass]="{ invalid: submitted && f.title.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Last Name
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <input
+            disabled
+            type="text"
+            class="form-control inputForm"
+            [(ngModel)]="existingSellerLastName"
+            placeholder="Last Name"
+            formControlName="lastName"
+            [ngClass]="{ invalid: submitted && f.title.errors }"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Date of Birth <em>*</em></label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            formControlName="dateOfBirth"
+            class="form-control inputForm"
+            [(ngModel)]="existingDateOfBirthSeller"
+            mwlFlatpickr
+            [dateFormat]="'Y-m-d'"
+            maxDate="{{ maxDate }}"
+          />
+          <!-- <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="Date Of Birth"
+            formControlName="title"
+            [ngClass]="{ invalid: submitted && f.title.errors }"
+          /> -->
+        </div>
+      </div>
+    </nb-card>
+
+    <!-- dynamic part start -->
+    <nb-card class="p-3 mb-3" *ngIf="sellerDynamicData.length > 0">
+      <div *ngFor="let val of sellerDynamicData; let i = index">
+        <div class="form-group row" *ngIf="val.typeCode == 6">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <!-- (selectedChange)="getSelectedDropdownData($event)" -->
+          <div class="col-md-9">
+            <nb-select
+              placeholder="Select Type"
+              (selectedChange)="groupChangeSelects($event, i)"
+              [ngClass]="{ invalid: submitted && f.dropDownData.errors }"
+            >
+              <nb-option [value]="list" *ngFor="let list of val.values">{{
+                list
+              }}</nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <!-- <span class="imagsProduct" *ngFor="let images of val.value_13;let k = index;">
+            <i class="nb-close iconClose" (click)="removeVideo(i, k)"></i>
+            <img class="imgesList" [src]="images.imageLink">
+          </span> -->
+
+        <div class="form-group row" *ngIf="val.typeCode == 18">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <div
+              class="imgLoading"
+              *ngIf="isLoadingIcon"
+              [nbSpinner]="isLoadingIcon"
+              nbSpinnerStatus="primary"
+            ></div>
+            <!-- <img class="userImgEdit" width="30" [src]="val.value_18.docLink"> -->
+            <span *ngFor="let doc of val.value_18; let k = index">
+              <a
+                style="color: #418fdb !important; font-weight: bold;"
+                class="view_{{ i }}"
+                href="{{ doc.docLink }}"
+                target="_blank"
+              >
+                View
+              </a>
+              <label
+                class="btn btn-small remove_pdf viewClose_{{ i }}"
+                (click)="removeDocument(i, val.typeCode, k)"
+                style="color: #ff9e9a;"
+              >
+                <i class="nb-close iconClose" style="position: inherit;"></i>
+              </label>
+            </span>
+            <!-- <label type="button" class="btn btn-outline-secondary" for="docUploaded">asdf</label> -->
+            <label
+              *ngIf="
+                !val.value_18 || val.value_18.length < val.noOfDocumentsAllowed
+              "
+              type="button"
+              class="btn btn-secondary btn-sm chooseView_{{ i }}"
+              for="docUploaded{{ i }}"
+              >Choose file</label
+            >
+            <input
+              type="file"
+              id="docUploaded{{ i }}"
+              class="inputForm border-0 d-none"
+              ng2FileSelect
+              [uploader]="uploader"
+              (change)="uploadIconFile($event, i, val.typeCode)"
+              accept=".{{ val.documentType }}"
+            />
+            <!-- <input type="file" class="inputForm border-0" accept="image/*" (change)="uploadIconFile($event)"> -->
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 4">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <nb-checkbox
+              *ngFor="let checkBox of val.values"
+              class="mr-2"
+              (change)="groupCheckBox($event, checkBox, i)"
+              >{{ checkBox }}</nb-checkbox
+            >
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 1">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              maxLength="{{ val.valueMax | number: '1.0-0' }}"
+              minLength="{{ val.valueMin | number: '1.0-0' }}"
+              class="form-control inputForm"
+              value="{{ val?.value_1 }}"
+              placeholder="Text Box"
+              (keyup)="groupTextList($event, i)"
+              (change)="groupTextList($event, i)"
+            />
+            <span
+              [ngClass]="{
+                maxchar: val.colorCode === 0,
+                'text-danger': val.colorCode === 1,
+                'text-success': val.colorCode === 2,
+                invalid: submitted
+              }"
+              >Min Char = {{ val.valueMin | number: '1.0-0' }}, Max Char =
+              {{ val.valueMax | number: '1.0-0' }}</span
+            >
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 2">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <textarea
+              rows="4"
+              maxLength="{{ val.valueMax | number: '1.0-0' }}"
+              minLength="{{ val.valueMin | number: '1.0-0' }}"
+              class="form-control inputForm"
+              value="{{ val?.value_2 }}"
+              placeholder="Text Area"
+              (keyup)="groupTextList($event, i)"
+              (change)="groupTextList($event, i)"
+            ></textarea>
+            <span
+              [ngClass]="{
+                maxchar: val.colorCode === 0,
+                'text-danger': val.colorCode === 1,
+                'text-success': val.colorCode === 2
+              }"
+              >Min Char = {{ val.valueMin | number: '1.0-0' }}, Max Char =
+              {{ val.valueMax | number: '1.0-0' }}</span
+            >
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 3">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <ng5-slider
+              [options]="rangeValidation(val.valueMin, val.valueMax)"
+              [(value)]="val.value_3 ? val.value_3.min : val.valueMin"
+              [(highValue)]="val.value_3 ? val.value_3.max : val.valueMax"
+              (userChange)="
+                onRangeChange($event, i, val.valueMin, val.valueMax)
+              "
+            ></ng5-slider>
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 5">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <nb-radio-group>
+              <nb-radio
+                class="d-inline-block"
+                [checked]="val?.value_5 == radioBox"
+                [value]="radioBox"
+                (valueChange)="groupChangeSelect($event, i)"
+                *ngFor="let radioBox of val.values"
+                >{{ radioBox }}</nb-radio
+              >
+            </nb-radio-group>
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 7">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control inputForm locationCheck"
+              placeholder="Location"
+              id="locatFill{{ i }}"
+              (keyup)="locationSearch($event, i, val.typeCode)"
+            />
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 8">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9 input-group full-width">
+            <div
+              class="input-group-addon boxHeight border py-2 px-3"
+              (click)="plusMinus(-1, i)"
+            >
+              -
+            </div>
+            <input
+              type="number"
+              min="1"
+              class="form-control inputForm"
+              value="{{ val?.value_8 }}"
+              placeholder="+/- controller"
+              style="-moz-appearance:textfield;"
+              readonly
+            />
+            <div
+              class="input-group-addon border boxHeight py-2 px-3"
+              (click)="plusMinus(1, i)"
+            >
+              +
+            </div>
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 9">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9 input-group full-width units">
+            <!-- <input type="text" class="inputForm col-5 p-0 numerical" [(ngModel)]="val.numericalType" readonly> -->
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm w-100"
+              value="{{ val?.value_9 }}"
+              placeholder="Numeric"
+              (keyup)="groupTextList($event, i)"
+              (keypress)="numberOnly($event)"
+              (change)="groupTextList($event, i)"
+            />
+            <span
+              class="col-9"
+              [ngClass]="{
+                maxchar: val.colorCode === 0,
+                'text-danger': val.colorCode === 1,
+                'text-success': val.colorCode === 2
+              }"
+              >Min {{ numericalType(val.numericalType.name) }} =
+              {{ val.valueMin | number: '1.0-0' }}, Max
+              {{ numericalType(val.numericalType.name) }} =
+              {{ val.valueMax | number: '1.0-0' }}</span
+            >
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 10">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control inputForm"
+              value="{{ val?.value_10 }}"
+              (change)="groupTextList($event, i)"
+              mwlFlatpickr
+              [enableTime]="true"
+              [dateFormat]="'Y-m-d H:i'"
+            />
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 11">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control inputForm"
+              value="{{ val?.value_11 }}"
+              (change)="groupTextList($event, i)"
+              mwlFlatpickr
+              [dateFormat]="'Y-m-d'"
+            />
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 12">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <ejs-datepicker
+              (change)="dateP($event, i)"
+              value="{{ val?.value_12 }}"
+              [max]="maxDate"
+              [start]="start"
+              [depth]="depth"
+              [format]="format"
+            ></ejs-datepicker>
+            <!-- <input [owlDateTimeTrigger]="dt12" class="form-control inputForm" [owlDateTime]="dt12" [value]="val?.values_12">
+            <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" (yearSelected)="chosenYearHandler($event, dt12, i)"
+              #dt12></owl-date-time> -->
+            <!-- <input type="text" class="form-control inputForm"  value="{{list?.value_12}}" (change)="groupTextList($event, i, j)" mwlFlatpickr [dateFormat]="'Y'"> -->
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 13">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <div
+              class="imgLoading"
+              *ngIf="val.isLoading"
+              [nbSpinner]="val.isLoading"
+              nbSpinnerStatus="primary"
+            ></div>
+            <span class="imgUpload" *ngIf="img.length < val.valueMax">
+              <input
+                type="file"
+                accept="image/*"
+                class="fileInput"
+                (change)="fileChangeEvent($event, i)"
+              />
+            </span>
+            <span
+              class="imagsProduct"
+              *ngFor="let images of val.value_13; let k = index"
+            >
+              <i class="nb-close iconClose" (click)="removeVideo(i, k)"></i>
+              <img class="imgesList" [src]="images.imageLink" />
+            </span>
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 14">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <div
+              class="imgLoading"
+              *ngIf="val.isLoading"
+              [nbSpinner]="val.isLoading"
+              nbSpinnerStatus="primary"
+            ></div>
+            <span class="imgUpload" *ngIf="videos.length < val.valueMax">
+              <input
+                type="file"
+                name="image"
+                accept="video/*"
+                class="fileInput"
+                (change)="videoChangeEvent($event, i)"
+                ng2FileSelect
+                [uploader]="uploader"
+                multiple
+              />
+              <!-- <input type="file" accept="video/*" class="fileInput"  ng2FileSelect [uploader]="uploader" (change)="videoChangeEvent($event, i)"> -->
+            </span>
+            <span
+              class="imagsProduct"
+              *ngFor="let video of val.value_14; let k = index"
+            >
+              <i class="nb-close iconClose" (click)="removeVideo(i, k)"></i>
+              <video class="imgesList" controls>
+                <source [src]="video.videoLink" type="video/mp4" />
+                <source [src]="video.videoLink" type="video/ogg" />
+              </video>
+            </span>
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+        <div class="form-group row" *ngIf="val.typeCode == 15">
+          <label class="col-md-3 col-form-label labelT"
+            >{{ val.title }}
+            <em *ngIf="val.mandatory">*</em>
+          </label>
+          <div class="col-md-9">
+            <ui-switch
+              [checked]="val.value_15 ? true : false"
+              (valueChange)="groupChangeSelect($event, i)"
+            ></ui-switch>
+          </div>
+          <!-- <div class="col-12 text-center text-danger" *ngIf="list.errMsg">{{list.errMsg}}</div> -->
+        </div>
+      </div>
+    </nb-card>
+    <!-- dynamic part ends -->
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

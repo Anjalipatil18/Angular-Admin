@@ -1,0 +1,73 @@
+<nb-card class="widthDialog">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup" *ngIf="content">
+    <div class="col-12 form-group row p-0">
+      <div class="col-6 p-0">
+        <label class="col-md-4 font-weight-bold">Width:</label>
+        <input
+          class="col-md-8"
+          type="number"
+          [(ngModel)]="width"
+          nbInput
+          disabled
+        />
+      </div>
+      <div class="col-6 p-0">
+        <label class="col-md-4 font-weight-bold">height:</label>
+        <input
+          type="number"
+          class="col-md-8"
+          nbInput
+          [(ngModel)]="height"
+          disabled
+        />
+      </div>
+
+      <div class="col-12 p-0 mt-2" *ngIf="!type">
+        <label class="col-3 font-weight-bold">Image Title:</label>
+        <input
+          [(ngModel)]="imgTitle"
+          type="text"
+          class="col-9"
+          nbInput
+          placeholder="Image Title"
+          [ngClass]="{ invalid: submitted && f.title.errors }"
+        />
+      </div>
+      <div class="col-12 p-0 mt-2" *ngIf="!type">
+        <label class="col-3 font-weight-bold">Alt Text:</label>
+        <input
+          [(ngModel)]="imgAlt"
+          type="text"
+          class="col-9"
+          nbInput
+          placeholder="Alt Title"
+          [ngClass]="{ invalid: submitted && f.title.errors }"
+        />
+      </div>
+    </div>
+    <!-- <button nbButton status="danger" (click)="crop()">Crop</button> -->
+    <!-- <div class="col-md-6 p-0">
+            <img [src]="croppedImage.base64" />
+          </div> -->
+
+    <div class="form-group col-md-12 row">
+      <image-cropper
+        [imageChangedEvent]="content"
+        [maintainAspectRatio]="false"
+        [aspectRatio]="4 / 3"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+    <button nbButton class="ml-1" status="info" (click)="submit()">
+      {{ ok }}
+    </button>
+  </nb-card-footer>
+</nb-card>

@@ -1,0 +1,159 @@
+<!-- <nb-card class="widthDialog"> -->
+<nb-card>
+  <nb-card-header class="text-left">SMS SETTINGS</nb-card-header>
+  <nb-card-body class="inputGroup">
+    <form
+      class="inputGroup  p-0"
+      [formGroup]="configForm"
+      (ngSubmit)="getUsers(configForm.value)"
+    >
+      <div class="col-xl-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >Max retry allowed For OTP <em>*</em></label
+          >
+          <div class="col-md-8">
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm"
+              formControlName="maxAttempOtp"
+              [ngClass]="{ invalid: submitted && f.maxAttempOtp.errors }"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >Time allowed for expire OTP <em>*</em></label
+          >
+          <div class="col-md-4">
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm"
+              formControlName="expireOtp"
+              [ngClass]="{ invalid: submitted && f.expireOtp.errors }"
+            />
+          </div>
+          Seconds
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >Max allowed forget password <em>*</em></label
+          >
+          <div class="col-md-8">
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm"
+              formControlName="maxAttempForget"
+              [ngClass]="{ invalid: submitted && f.maxAttempForget.errors }"
+            />
+          </div>
+        </div>
+        <div class="form-group row" style="border-bottom: 1px solid #ebeef2">
+          <nb-card-header class="text-left" style="border-bottom: none"
+            >ADVERTISEMENT SETTINGS </nb-card-header
+          ><br /><br />
+          <br />
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >Ad expiration time <em>*</em></label
+          >
+          <div class="col-md-4">
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm"
+              formControlName="daysExpiry"
+              [ngClass]="{ invalid: submitted && f.daysExpiry.errors }"
+            />
+          </div>
+          Day
+        </div>
+        <div class="form-group row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm"
+              formControlName="hoursExpiry"
+              [ngClass]="{ invalid: submitted && f.hoursExpiry.errors }"
+            />
+          </div>
+          Hours
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >default listing fetch<br />
+            radius <em>*</em></label
+          >
+          <div class="col-md-2">
+            <input
+              type="number"
+              min="0"
+              class="form-control inputForm"
+              formControlName="defaultRadius"
+              [ngClass]="{ invalid: submitted && f.defaultRadius.errors }"
+            />
+          </div>
+          <nb-select
+            placeholder="Select Unit"
+            (selectedChange)="defaultRadius($event)"
+            formControlName="radiusUnits"
+          >
+            <nb-option
+              [value]="list"
+              *ngFor="let list of radiusUnits; let i = index"
+              >{{ list }}</nb-option
+            >
+          </nb-select>
+        </div>
+        <div class="form-group row" style="border-bottom: 1px solid #ebeef2">
+          <nb-card-header class="text-left" style="border-bottom: none"
+            >WEBSITE URL </nb-card-header
+          ><br /><br />
+          <br />
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >Privacy Policy Url <em>*</em></label
+          >
+          <div class="col-md-8">
+            <input
+              type="text"
+              min="0"
+              class="form-control inputForm"
+              (keyup)="onKey($event)"
+              formControlName="privacyLink"
+              [ngClass]="{ invalid: submitted && f.privacyLink.errors }"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label labelT"
+            >Terms & Condition Url <em>*</em></label
+          >
+          <div class="col-md-8">
+            <input
+              type="text"
+              min="0"
+              class="form-control inputForm"
+              (keyup)="onKey($event)"
+              formControlName="termsLink"
+              [ngClass]="{ invalid: submitted && f.termsLink.errors }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="ml-1" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

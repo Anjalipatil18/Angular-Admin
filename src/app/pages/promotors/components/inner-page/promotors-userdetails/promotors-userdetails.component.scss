@@ -1,0 +1,96 @@
+
+.attributrGroupList {
+    .titleH1{
+        font-size: 24px;
+        color: #878787;
+        font-weight: 400;
+        text-transform: capitalize;
+    }
+    .titleH2{
+        font-size: 28px;
+        font-weight: 500;
+        color: #212121;
+    }
+    .labelT {
+        color: #878787;
+    }
+    .titleDescription {
+        position: relative;
+        top: 10px;
+        word-break: break-all;
+        font-weight: 500;
+    }    
+}
+.listItemImg{
+    .carousalList{
+        position: sticky;
+        top: 90px;
+        .allListCarousal {
+            height: 400px;
+            overflow: auto;
+        }
+        .allListCarousal{
+            .imgContents img {
+                cursor: pointer;
+                height: 70px;
+                object-fit: cover;
+                border: 1px solid #dadada;
+                margin-bottom: 10px;
+                &.active{
+                  border:1px solid #0275d8;
+                }
+            }
+        }
+
+      
+    }
+    .imgContents .img{
+        width:100px;
+        height: 100px;
+    }
+    
+}
+
+.imagsProduct {
+    display: block;
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-left: 5px;
+    position: relative;
+    .imgesList{
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+  }
+
+:host::ng-deep{
+    nb-user{
+        .user-name {
+            font-size: 1.3em;
+            text-transform: capitalize;
+        }
+        .user-title{
+            font-size: 1em;
+            color: #878787;
+        }
+        .user-picture {
+            height: 4.25rem;
+            width: 4.25rem;
+        }
+    }
+}
+
+
+
+  
+  /** carousal **/
+.img-zoom-container{   
+    img.imgCat {
+        height: 400px;
+        object-fit: cover;
+        width: 100%;
+    }
+  }
+ 

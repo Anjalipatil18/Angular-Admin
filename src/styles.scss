@@ -1,0 +1,283 @@
+@import 'themes';
+@import '~ng-pick-datetime/assets/style/picker.min.css';
+@import '~@nebular/theme/styles/globals';
+@import './styles-variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-ui-switch/ui-switch.component.scss';
+@import '~flatpickr/dist/flatpickr.css';
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-calendars/styles/material.css';
+
+// select with search option
+@import '~@ng-select/ng-select/themes/default.theme.css';
+// @import 'themes';
+// @import '~@nebular/theme/styles/globals';
+// @import '~nebular-icons/css/nebular-icons.css'; // <- Add that
+
+@include nb-install() {
+  @include nb-theme-global();
+}
+/* You can add global styles to this file, and also import other style files */
+
+.logoutContainer {
+  cursor: pointer;
+}
+
+quill-editor {
+  .ql-container {
+    font-size: 13px;
+    height: 200px;
+    margin: 0px;
+    position: relative;
+  }
+  .ql-container.ql-snow {
+    background-color: white;
+  }
+  .ql-toolbar.ql-snow {
+    background-color: white;
+  }
+}
+
+// currency dropdown
+.currency {
+  button {
+    width: 120px !important;
+    &:after {
+      right: 0.25rem !important;
+    }
+  }
+  .ng-select {
+    .ng-select-container {
+      width: 120px;
+      height: 40px;
+    }
+  }
+}
+
+// promotors country list
+.countryList {
+  .ng-select .ng-select-container {
+    height: 40px !important;
+  }
+  .ng-dropdown-panel {
+    width: 105px !important;
+    left: 15px !important;
+  }
+}
+
+// units dropdown
+.units {
+  button {
+    width: 120px !important;
+    &:after {
+      right: 0.25rem !important;
+    }
+  }
+  .ng-select {
+    .ng-select-container {
+      // width: 120px;
+      height: 40px;
+    }
+  }
+}
+
+/** table Search**/
+.searchListContent {
+  .searchInput {
+    border: 0;
+    border-bottom: 1px solid gainsboro;
+    border-radius: 0 !important;
+    font-size: 1rem;
+    color: #4b4b4b;
+  }
+}
+.columnLayout nb-card,
+nb-card.popupContent {
+  margin: 0 auto;
+  max-width: 100%;
+}
+.inputGroup {
+  .inputForm {
+    border: 1px solid #dadfe6;
+    color: #2a2a2ad4;
+    height: 40px;
+  }
+}
+
+.iconArrow {
+  position: relative;
+  top: -20px;
+  left: -5px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.iconNb {
+  background: transparent;
+  border: 0;
+  position: relative;
+  top: 3px;
+  padding: 0 !important;
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+fa-icon.iconFaicon {
+  position: relative;
+  top: -3px;
+  margin: 0 1px 0 5px;
+  color: #67b3ff;
+  cursor: pointer;
+}
+.menu-item a .menu-title {
+  padding-left: 5px;
+}
+.innerImg {
+  .img-zoom-container {
+    position: relative;
+  }
+
+  .img-zoom-lens {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    /*set the size of the lens:*/
+    width: 100px;
+    height: 100px;
+    z-index: 5;
+  }
+}
+
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  width: 40%;
+  height: 500px;
+  position: fixed;
+  right: 2%;
+  z-index: 5;
+  top: 22%;
+  background: #fff;
+  &.active {
+    z-index: -1;
+  }
+}
+
+.imgUpload {
+  background-image: url(assets/images/fileIcon.png);
+}
+.menu-icon {
+  &.iconMenu {
+    width: 22px !important;
+    height: 25px;
+    background-size: contain;
+    /* margin: 0 0.5rem 0 !important; */
+    background-repeat: no-repeat;
+  }
+  &.icon-Dashboard {
+    background-image: url(assets/images/dashboard.png);
+  }
+  &.icon-TextSettings {
+    background-image: url(assets/images/menuSettings.svg);
+  }
+  &.icon-Logs {
+    background-image: url(assets/images/menuLogs.svg);
+  }
+  &.icon-adminUsers {
+    background-image: url(assets/images/menuAdminUsers.svg);
+  }
+  &.icon-Users {
+    background-image: url(assets/images/menuUsers.svg);
+  }
+  &.icon-Attr {
+    background-image: url(assets/images/menuAttributes.svg);
+  }
+  &.icon-AttrGroups {
+    background-image: url(assets/images/menuAttributesgroups.svg);
+  }
+  &.icon-AssetsType {
+    background-image: url(assets/images/menuAssetType.svg);
+  }
+  &.icon-Tags {
+    background-image: url(assets/images/menuTag.svg);
+  }
+  &.icon-Taxes {
+    background-image: url(assets/images/taxes.svg);
+  }
+  &.icon-Agents {
+    background-image: url(assets/images/agent.png);
+  }
+  &.icon-Verfication {
+    background-image: url(assets/images/MaskGroup.png);
+  }
+  &.icon-Attributes {
+    background-image: url(assets/images/attributes.png);
+  }
+  &.icon-AttributesGroup {
+    background-image: url(assets/images/groupattributes.png);
+  }
+  &.icon-AssetsCat {
+    background-image: url(assets/images/assets.png);
+  }
+  &.icon-scene {
+    background-image: url(assets/images/scene.png);
+  }
+  &.icon-promoter {
+    background-image: url(assets/images/megaphone.svg);
+  }
+  &.icon-seller {
+    background-image: url(assets/images/sellerAttributes.svg);
+  }
+  &.icon-ratings {
+    background-image: url(assets/images/ratings.svg);
+  }
+  &.icon-city {
+    background-image: url(assets/images/city.svg);
+  }
+  &.icon-brands {
+    background-image: url(assets/images/brands.svg);
+  }
+  &.icon-colors {
+    background-image: url(assets/images/colors.svg);
+  }
+  &.icon-sellers {
+    background-image: url(assets/images/seller.svg);
+  }
+}
+
+// drag & drop dialog popup
+// .cdk-global-overlay-wrapper {
+//   background: rgba(0, 0, 0, 0.288);
+// }
+// .cdk-global-overlay-wrapper .cdk-overlay-pane nb-dialog-container {
+//   width: 100%;
+// }
+#brandsModal > .cdk-global-overlay-wrapper {
+  background: rgba(0, 0, 0, 0.288);
+}
+#brandsModal > nb-dialog-container {
+  width: 100%;
+}
+.cdk-global-overlay-wrapper .cdk-overlay-pane nb-dialog-container #brandsModal {
+  max-width: 1000px !important;
+  max-height: 1000px !important;
+  width: 1000px !important;
+}
+.cdk-global-overlay-wrapper
+  .cdk-overlay-pane
+  nb-dialog-container
+  #brandsModal
+  .widthDialog {
+  max-width: 1000px !important;
+  max-height: 1000px !important;
+  width: 1000px !important;
+}
+
+.userDetails ngx-select-dropdown .ngx-dropdown-list-container {
+  height: 300px !important;
+}

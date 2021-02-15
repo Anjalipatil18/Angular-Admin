@@ -1,0 +1,27 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active">
+        <app-type-active
+          *ngIf="tabList == 'Active'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-type-active>
+      </nb-tab>
+      <nb-tab tabTitle="In Active">
+        <app-type-in-active
+          *ngIf="tabList == 'In Active'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-type-in-active>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted">
+        <app-type-deleted
+          *ngIf="tabList == 'Deleted'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-type-deleted>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

@@ -1,0 +1,73 @@
+<div
+  class="tableListEdit col-12 p-0"
+  *ngIf="langSelectors && langSelectors.length > 0"
+>
+  <!-- <i class="nb-arrow-thin-left iconArrow" (click)="back()"></i> -->
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+  <nb-card class="p-4">
+    <form
+      class="inputGroup col-xl-8 p-0"
+      [formGroup]="addUserForm"
+      (ngSubmit)="getUsers(addUserForm.value)"
+    >
+      <div class="form-group row" *ngIf="sCatId == 1">
+        <label class="col-sm-3 col-form-label labelT">Has Sub Category</label>
+        <div class="col-sm-9">
+          <nb-checkbox
+            [value]="hasScat"
+            (change)="hasSubCat($event)"
+          ></nb-checkbox>
+        </div>
+      </div>
+
+      <div
+        class="col-12 p-0"
+        [hidden]="!list.active"
+        *ngFor="let list of langSelectors; let i = index"
+      >
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label labelT"
+            >Category ({{ list.language }}) <em>*</em></label
+          >
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control inputForm"
+              formControlName="category_{{ list.languageCode }}"
+              [ngClass]="{
+                invalid:
+                  submitted &&
+                  addUserForm.controls['category_' + list.languageCode].errors
+              }"
+            />
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="!hasScat">
+          <label class="col-md-3 col-form-label labelT"
+            >Description ({{ list.language }})</label
+          >
+          <div class="col-md-9">
+            <!-- <ckeditor [editor]="Editor" formControlName="description_{{list.languageCode}}"></!-->
+            <quill-editor
+              formControlName="description_{{ list.languageCode }}"
+            ></quill-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card>
+</div>

@@ -1,0 +1,34 @@
+<nb-card>
+  <nb-tabset (changeTab)="selectTab($event)">
+    <!-- (changeTab)="selectTab($event) -->
+    <nb-tab tabTitle="User">
+      <app-user-privacy *ngIf="tabList == 'User'"></app-user-privacy>
+      <!-- <form *ngIf="tabList == 'Active & Verified'" [formGroup]="form">
+        <quill-editor
+          #editor [style.display]="hide ? 'none' : 'block'"
+          [styles]="{ color:textColor }"
+          [formControl]="form.controls['editor']">
+        </quill-editor>
+      
+        <button nbButton status="info" class="float-left btnSize mr-1" (click)="patchValue()" size="small">SAVE </button>
+        <button nbButton status="success" class="float-left btnSize mr-1" (click)="setControl()" size="small">EXECUTE </button>
+      </form> -->
+    </nb-tab>
+    <nb-tab tabTitle="Promoter">
+      <app-promoter-privacy
+        *ngIf="tabList == 'Promoter'"
+      ></app-promoter-privacy>
+      <!-- <form *ngIf="tabList == 'Suspended'" [formGroup]="form">
+        
+        <quill-editor
+          #editor [style.display]="hide ? 'none' : 'block'"
+          [styles]="{ color:textColor }"
+          [formControl]="form.controls['editor']">
+        </quill-editor>
+      
+        <button nbButton status="info" class="float-left btnSize mr-1" (click)="patchValue()" size="small">SAVE </button>
+        <button nbButton status="success" class="float-left btnSize mr-1" (click)="setControl()" size="small">EXECUTE </button>
+      </form> -->
+    </nb-tab>
+  </nb-tabset>
+</nb-card>

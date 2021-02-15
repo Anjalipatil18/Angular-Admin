@@ -1,0 +1,124 @@
+<nb-card>
+  <div class="tableList col-12">
+    <div class="searchListContent col-12 my-3 p-0">
+      <label>Search By </label>
+      <input
+        type="text"
+        nbInput
+        class="searchInput"
+        placeholder="Reviewer"
+        value=""
+        #sTax
+        (keyup)="searchVerifiedActive(sTax.value)"
+      />
+    </div>
+
+    <ngx-datatable
+      #table
+      class="bootstrap col-12 p-0"
+      [rowHeight]="'auto'"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [rows]="userActiveData.length > 0 ? userActiveData : userActive"
+      [limit]="10"
+      [footerHeight]="40"
+    >
+      <ngx-datatable-column name="SL.No">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>
+            {{ rowIndex + 1 }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Reviewer Name">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>{{ row.likeDetails.timestamp | date: 'medium' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Date & Time">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>{{ row.firstName ? row.firstName : 'N/A' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Models">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>{{ row.likeDetails.city ? row.likeDetails.city : 'N/A' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Images">
+        <ng-template
+          let-row="row"
+          let-rowIndex="rowIndex"
+          ngx-datatable-cell-template
+        >
+          <span>{{
+            row.likeDetails.country ? row.likeDetails.country : 'N/A'
+          }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Ip address">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{ row.likeDetails.ip?row.likeDetails.ip:'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Lat Long">
+      <ng-template
+        let-row="row"
+        let-rowIndex="rowIndex"
+        ngx-datatable-cell-template
+      >
+        <span>{{  row.likeDetails.lat? row.likeDetails.lat:'N/A' }}, {{  row.likeDetails.long? row.likeDetails.long:'N/A' }}</span>
+      </ng-template>
+    </ngx-datatable-column> -->
+      <ngx-datatable-footer>
+        <ng-template
+          ngx-datatable-footer-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset"
+          let-isVisible="isVisible"
+        >
+          <div class="page-count">
+            <span *ngIf="selectedMessage">
+              {{ selectedCount.toLocaleString() }} {{ selectedMessage }} /
+            </span>
+            {{ rowCount.toLocaleString() }} {{ totalMessage }} Total
+          </div>
+          <datatable-pager
+            [pagerLeftArrowIcon]="'datatable-icon-left'"
+            [pagerRightArrowIcon]="'datatable-icon-right'"
+            [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'"
+            [page]="curPage"
+            [size]="pageSize"
+            [count]="rowCount"
+            (change)="table.onFooterPage($event)"
+          >
+          </datatable-pager>
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+  </div>
+</nb-card>

@@ -1,0 +1,28 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Brands">
+        <app-product-models
+          *ngIf="tabList == 'Active Brands'"
+        ></app-product-models>
+      </nb-tab>
+      <nb-tab tabTitle="Inactive Brands">
+        <app-product-review
+          *ngIf="tabList == 'Inactive Brands'"
+        ></app-product-review>
+      </nb-tab>
+      <!-- <nb-tab tabTitle="Seller Models">
+        <app-seller-models *ngIf="tabList == 'Seller Models'"></app-seller-models>
+      </nb-tab>
+      <nb-tab tabTitle="Buyer Models">
+        <app-buyer-models *ngIf="tabList == 'Buyer Models'"></app-buyer-models>
+      </nb-tab>
+      <nb-tab tabTitle="Buyer">
+        <app-buyer *ngIf="tabList == 'Buyer'"></app-buyer>
+      </nb-tab>
+      <nb-tab tabTitle="Seller Models Parameters">
+        <app-models-parameters *ngIf="tabList == 'Seller Models Parameters'"></app-models-parameters>
+      </nb-tab> -->
+    </nb-tabset>
+  </nb-card>
+</div>

@@ -1,0 +1,20 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Attributes">
+        <app-active-attributes
+          *ngIf="tabList == 'Active Attributes'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-active-attributes>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Attributes">
+        <app-deleted-attributes
+          *ngIf="tabList == 'Deleted Attributes'"
+          (listTable)="listOnTable($event)"
+          [allDataList]="allDataList"
+        ></app-deleted-attributes>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

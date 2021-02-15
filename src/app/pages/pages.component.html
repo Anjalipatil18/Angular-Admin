@@ -1,0 +1,28 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <app-header class="col-12 p-0"></app-header>
+  </nb-layout-header>
+  <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive>
+    <nb-menu [items]="menu"></nb-menu>
+  </nb-sidebar>
+  <nb-layout-column class="main-content p-0">
+    <app-ng7-dynamic-breadcrumb></app-ng7-dynamic-breadcrumb>
+    <div class="col-12 columnLayout">
+      <!-- <p><strong>{{idleState}}</strong></p>
+          <p *ngIf="lastPing"><small>Last keepalive ping <strong>{{lastPing | amTimeAgo}}</strong></small></p> -->
+      <!-- <button (click)="reset()" *ngIf="timedOut">Restart</button>         -->
+      <router-outlet></router-outlet>
+    </div>
+  </nb-layout-column>
+</nb-layout>
+
+<ngx-spinner
+  bdOpacity="0.5"
+  bdColor="#7b7b7ba1"
+  size="medium"
+  color="#02fee4"
+  type="ball-fussion"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

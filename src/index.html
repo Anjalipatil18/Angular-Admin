@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lopongo</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png" />
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.448.0.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIT6qGTaOHCjhMq9GXgdKjSCxvj30gTHQ&libraries=places,geometry"></script>
+    <script type="text/javascript">
+      AWS.config.update({
+        accessKeyId: 'AKIAVATOZB37ZAGERZ47',
+        secretAccessKey: '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',
+      });
+      AWS.config.region = 'eu-west-3';
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nebular-icons@1.1.0/css/nebular-icons.css"
+    />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

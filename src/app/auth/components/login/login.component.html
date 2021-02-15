@@ -1,0 +1,65 @@
+<div class="cover-container">
+  <div class="row h-100 w-100">
+    <section class="d-none d-sm-block col-md-6 bg-image"></section>
+    <section class="loginFormList col-12 col-md-6 p-0">
+      <nb-layout>
+        <nb-layout-column>
+          <div class="container-fluid login-container">
+            <h1 class="text-primary text-center display-5">
+              <img src="./assets/images/logo.png" alt="Logo" />
+            </h1>
+            <nb-card
+              accent="info"
+              [nbSpinner]="isLoading"
+              nbSpinnerStatus="primary"
+            >
+              <nb-card-header>Login</nb-card-header>
+              <nb-card-body>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      nbInput
+                      fullWidth
+                      shape="semi-round"
+                      placeholder="Email"
+                      required
+                      formControlName="email"
+                      autocomplete="email"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      nbInput
+                      fullWidth
+                      shape="semi-round"
+                      placeholder="Password"
+                      required
+                      formControlName="password"
+                      autocomplete="new-password"
+                    />
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button
+                      [disabled]="!loginForm.valid"
+                      type="submit"
+                      nbButton
+                      size="small"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </nb-layout-column>
+      </nb-layout>
+    </section>
+  </div>
+</div>

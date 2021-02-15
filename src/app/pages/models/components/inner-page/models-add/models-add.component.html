@@ -1,0 +1,96 @@
+<div class="tableListEdit col-12 p-0">
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-8 p-0"
+    *ngIf="addForm"
+    [formGroup]="addForm"
+    (ngSubmit)="getUsers(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div
+        class="form-group row"
+        [hidden]="!list.active"
+        *ngFor="let list of langSelectors; let i = index"
+      >
+        <label class="col-md-3 col-form-label labelT"
+          >Brands ({{ list.language }})
+          <em>*</em>
+        </label>
+        <div class="col-md-9 input-group full-width">
+          <!-- <ng-select class="w-100" [items]="currencies" bindLabel="name" placeholder="Brands" formControlName="country" [(ngModel)]="currencySymbol">
+          </ng-select> -->
+          <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="Brand"
+            formControlName="brands_{{ list.languageCode }}"
+            [ngClass]="{
+              invalid:
+                submitted &&
+                addForm.controls['brands_' + list.languageCode].errors
+            }"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Tag
+          <em>*</em>
+        </label>
+        <div class="col-md-9 input-group full-width">
+          <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="Tag"
+            formControlName="tag"
+            [ngClass]="{ invalid: submitted && f.tag.errors }"
+          />
+        </div>
+      </div>
+
+      <!-- <div class="form-group row" [hidden]="!list.active" *ngFor="let list of langSelectors; let i = index;">
+        <label class="col-md-3 col-form-label labelT">Models ({{list.language}})
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <tag-input 
+            formControlName="models_{{list.languageCode}}"
+            (onAdd)="onAdd($event, list.languageCode)"
+            (onRemove)="onRemove($event, list.languageCode)"
+            (onSelect)="onSelect($event)"
+            [modelAsStrings]="true">
+          </tag-input>
+        </div>
+      </div> -->
+
+      <!-- <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Models 
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <button class="titleLink iconNb" [routerLink]="['../../../../product-models', statusText, assetId, statusCode]" *ngIf="assetId == 1">Add Models</button>
+          <button class="titleLink iconNb" [routerLink]="['../../../../product-models', statusText, assetId, statusCode]" *ngIf="assetId != 1">Edit Models</button>
+          <button class="titleLink iconNb" [routerLink]="['./ads-comments', row._id]">Add Models</button>
+          <input type="text" class="form-control inputForm" placeholder="Tag" formControlName="modelsLength" [ngClass]="{ invalid: submitted && f.country.errors }">
+        </div>
+      </div> -->
+    </nb-card>
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,55 @@
+<!-- <div class="col-12 my-3">
+
+  <quill-editor></quill-editor>
+
+</div>
+
+<div class="col-12 my-3">
+
+  <button nbButton status="info" class="float-left btnSize mr-1" size="small">SAVE </button>
+  <button nbButton status="success" class="float-left btnSize mr-1" size="small">EXECUTE </button>
+
+</div> -->
+
+<!-- <form [formGroup]="form">
+  <quill-editor
+    #editor [style.display]="hide ? 'none' : 'block'"
+    [styles]="{ color:textColor }"
+    [formControl]="form.controls['editor']">
+  </quill-editor>
+
+  <button nbButton status="info" class="float-left btnSize mr-1" (click)="patchValue()" size="small">SAVE </button>
+  <button nbButton status="success" class="float-left btnSize mr-1" (click)="setControl()" size="small">EXECUTE </button>
+</form> -->
+<nb-card>
+  <nb-tabset (changeTab)="selectTab($event)">
+    <!-- (changeTab)="selectTab($event) -->
+    <nb-tab tabTitle="User">
+      <app-user-terms *ngIf="tabList == 'User'"></app-user-terms>
+      <!-- <form *ngIf="tabList == 'Active & Verified'" [formGroup]="form">
+          <quill-editor
+            #editor [style.display]="hide ? 'none' : 'block'"
+            [styles]="{ color:textColor }"
+            [formControl]="form.controls['editor']">
+          </quill-editor>
+        
+          <button nbButton status="info" class="float-left btnSize mr-1" (click)="patchValue()" size="small">SAVE </button>
+          <button nbButton status="success" class="float-left btnSize mr-1" (click)="setControl()" size="small">EXECUTE </button>
+        </form> -->
+    </nb-tab>
+    <nb-tab tabTitle="Promoter">
+      <app-promoter-terms *ngIf="tabList == 'Promoter'"></app-promoter-terms>
+      <!-- <form *ngIf="tabList == 'Suspended'" [formGroup]="form">
+          
+          <quill-editor
+            #editor [style.display]="hide ? 'none' : 'block'"
+            [styles]="{ color:textColor }"
+            [formControl]="form.controls['editor']">
+          </quill-editor>
+        
+          <button nbButton status="info" class="float-left btnSize mr-1" (click)="patchValue()" size="small">SAVE </button>
+          <button nbButton status="success" class="float-left btnSize mr-1" (click)="setControl()" size="small">EXECUTE </button>
+        </form> -->
+    </nb-tab>
+  </nb-tabset>
+</nb-card>

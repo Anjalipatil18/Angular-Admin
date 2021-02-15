@@ -1,0 +1,41 @@
+<div class="headerList col-12 p-0">
+  <div class="header-container float-left">
+    <div class="logo-containter">
+      <a (click)="toggleSidebar()" href="#" class="navigation">
+        <i class="nb-menu"></i>
+      </a>
+      <div class="logo" (click)="goToHome()">
+        <img src="assets/images/logo.png" alt="Logo" />
+      </div>
+    </div>
+  </div>
+  <div class="header-container pt-1 float-right logoutContainer">
+    <!-- <select #langSelect (change)="translate.use(langSelect.value)">
+          <option
+            *ngFor="let lang of translate.getLangs()"
+            [value]="lang"
+            [selected]="lang === translate.currentLang"
+            >{{ lang }}</option
+          >
+        </select>  -->
+    <!-- <nb-select placeholder="Placeholder" outline status="primary" [(selected)]="language">
+            <nb-option *ngFor="let lang of translate.getLangs()"
+            [value]="lang"
+            [selected]="lang === translate.currentLang">
+            {{ lang }}</nb-option>            
+          </nb-select> -->
+    <nb-actions size="medium">
+      <nb-action>
+        <nb-user [nbPopover]="templateRef" [name]="userName"></nb-user>
+        <ng-template #templateRef>
+          <nb-list class="logout">
+            <!-- <nb-list-item>Change Password</nb-list-item> -->
+            <nb-list-item class="text-danger" (click)="logout()"
+              >Logout</nb-list-item
+            >
+          </nb-list>
+        </ng-template>
+      </nb-action>
+    </nb-actions>
+  </div>
+</div>

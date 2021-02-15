@@ -1,0 +1,33 @@
+<nb-card class="widthDialog">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup" *ngIf="content">
+    <!-- <div class="form-group col-md-12 row" >
+        <img class="userImgs" [src]="content.profilePic">
+      </div> -->
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >User Name:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.username
+      }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Email:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{ content.email }}</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label labelT font-weight-bold"
+        >Creation On:</label
+      >
+      <label class="col-md-8 col-form-label labelT">{{
+        content.creationOn | date: 'medium'
+      }}</label>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+  </nb-card-footer>
+</nb-card>

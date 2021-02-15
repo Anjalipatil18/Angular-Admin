@@ -1,0 +1,23 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Units">
+        <app-active-units *ngIf="tabList == 'Active Units'"></app-active-units>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Units">
+        <app-deleted-units
+          *ngIf="tabList == 'Deleted Units'"
+        ></app-deleted-units>
+      </nb-tab>
+      <!-- <nb-tab tabTitle="Deactivated Taxes">
+        <app-deactivated-taxes *ngIf="tabList == 'Deactivated Taxes'"></app-deactivated-taxes>
+      </nb-tab> -->
+      <!-- <nb-tab tabTitle="Suspended Taxes">
+        <app-suspended-taxes *ngIf="tabList == 'Suspended Taxes'"></app-suspended-taxes>
+      </nb-tab>
+      <nb-tab tabTitle="Reported Taxes">
+        <app-reported-taxes *ngIf="tabList == 'Reported Taxes'"></app-reported-taxes>
+      </nb-tab>     -->
+    </nb-tabset>
+  </nb-card>
+</div>

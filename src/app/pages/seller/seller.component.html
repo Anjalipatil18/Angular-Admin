@@ -1,0 +1,43 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <!-- <nb-tab tabTitle="Active Seller">
+        <app-active-seller *ngIf="tabList == 'Active Seller'"></app-active-seller>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Seller">
+        <app-deleted-seller *ngIf="tabList == 'Deleted Seller'"></app-deleted-seller>
+      </nb-tab> -->
+      <!-- <nb-tab tabTitle="Deactivated Tags">
+        <app-deactivated-seller *ngIf="tabList == 'Deactivated Tags'"></app-deactivated-seller>
+      </nb-tab> -->
+      <!-- <nb-tab tabTitle="Suspended Seller">
+        <app-suspended-seller *ngIf="tabList == 'Suspended Seller'"></app-suspended-seller>
+      </nb-tab>
+      <nb-tab tabTitle="Reported Seller">
+        <app-reported-seller *ngIf="tabList == 'Reported Seller'"></app-reported-seller>
+      </nb-tab>     -->
+
+      <nb-tab tabTitle="New Sellers">
+        <app-active-seller *ngIf="tabList == 'New Sellers'"></app-active-seller>
+      </nb-tab>
+      <nb-tab tabTitle="Approved">
+        <app-reported-seller
+          *ngIf="tabList == 'Approved'"
+        ></app-reported-seller>
+      </nb-tab>
+      <nb-tab tabTitle="Rejected">
+        <app-deactivated-seller
+          *ngIf="tabList == 'Rejected'"
+        ></app-deactivated-seller>
+      </nb-tab>
+      <nb-tab tabTitle="Suspended">
+        <app-suspended-seller
+          *ngIf="tabList == 'Suspended'"
+        ></app-suspended-seller>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted">
+        <app-deleted-seller *ngIf="tabList == 'Deleted'"></app-deleted-seller>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

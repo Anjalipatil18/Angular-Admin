@@ -1,0 +1,56 @@
+<div class="tableListEdit col-12 p-0">
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-8 p-0"
+    *ngIf="addForm"
+    [formGroup]="addForm"
+    (ngSubmit)="getUsers(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div
+        class="form-group row"
+        [hidden]="!list.active"
+        *ngFor="let list of langSelectors; let i = index"
+      >
+        <label class="col-md-3 col-form-label labelT"
+          >Model Name ({{ list.language }})
+          <em>*</em>
+        </label>
+        <div class="col-md-9 input-group full-width">
+          <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="Model"
+            formControlName="models_{{ list.languageCode }}"
+            [ngClass]="{ invalid: submitted && f.country.errors }"
+          />
+        </div>
+      </div>
+
+      <!-- <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Tag
+          <em>*</em>
+        </label>
+        <div class="col-md-9 input-group full-width">
+          <input type="text" class="form-control inputForm" placeholder="Tag" formControlName="tag" [ngClass]="{ invalid: submitted && f.country.errors }">
+        </div>
+      </div> -->
+    </nb-card>
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

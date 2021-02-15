@@ -1,0 +1,100 @@
+<i
+  class="nb-arrow-thin-left iconArrow"
+  *ngIf="dragDrop"
+  (click)="dragDrop = !dragDrop"
+></i>
+<nb-card id="brandsModal">
+  <div class="allDrag col-12 p-0 widthDialog" *ngIf="!dragDrop">
+    <div class="my-2 p-3" style="display: flex">
+      <div class="col-md-6">
+        <div
+          cdkDropList
+          [cdkDropListData]="artists"
+          class="col-12 border p-3 dragDropData"
+          [cdkDropListConnectedTo]="secondList"
+          #firstList="cdkDropList"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <h6 class="title text-info">Select Brands</h6>
+          <div class="col-12 p-0 position-relative">
+            <i class="nb-search iconArrow iconSearch"></i>
+            <input
+              type="text"
+              class="mb-3 pl-5"
+              nbInput
+              fullWidth
+              placeholder="Search Attribute Groups"
+              #aG
+              (keyup)="searchGroup(aG.value)"
+            />
+          </div>
+          <div
+            class="col-12 p-0 UserEventData"
+            *ngIf="artists && artists.length > 0"
+            style="height:400px; overflow-y:scroll"
+          >
+            <div
+              class="p-2 border border-top-0 pop ml-0"
+              *ngFor="let artist of artists"
+              cdkDrag
+            >
+              <div class="col-12 p-0 font-weight-bold">
+                {{ getBrandLang(artist) }}
+              </div>
+              <!-- <small class="subTitle">{{artist.titleTag}} <br></small> -->
+              <!-- <div class="col-12 p-0" *ngIf="artist.attributes && artist.attributes.length > 0">
+                    <small *ngFor="let list of artist.attributes"> -{{list.attrName}} <br></small>
+                  </div> -->
+            </div>
+          </div>
+          <div
+            class="col-12 border p-3 text-center"
+            *ngIf="artists && artists.length == 0"
+          >
+            no data
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div
+          cdkDropList
+          [cdkDropListData]="alteArtists"
+          class="col-12 border p-3 dragDropData"
+          [cdkDropListConnectedTo]="firstList"
+          #secondList="cdkDropList"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <h6 class="title text-info">Selected Brands</h6>
+          <div class="col-12 p-0" *ngIf="alteArtists && alteArtists.length > 0">
+            <div
+              class="p-2 border border-top-0 pop ml-0"
+              *ngFor="let artist of alteArtists"
+              cdkDrag
+            >
+              <div class="col-12 p-0 font-weight-bold">
+                {{ artist.brands_en }}
+              </div>
+              <!-- <small *ngIf="artist.titleTag"> {{artist.titleTag}} </small><br *ngIf="artist.titleTag">
+                  <div class="col-12 p-0" *ngIf="artist.attributes && artist.attributes.length > 0">
+                    <small *ngFor="let list of artist.attributes"> -{{list.attrName}} <br></small>
+                  </div> -->
+            </div>
+          </div>
+          <div
+            class="col-12 border p-3 text-center"
+            *ngIf="alteArtists && alteArtists.length == 0"
+          >
+            no data
+          </div>
+        </div>
+      </div>
+    </div>
+    <nb-card-footer class="text-center d-inline-block col-12">
+      <button nbButton status="info" class="mr-2" (click)="submit()">
+        Submit
+      </button>
+      <button nbButton status="danger" (click)="cancel()">Cancel</button>
+      <!-- <button nbButton status="info" class="ml-2" [disabled]="!(attributesGroupIds && attributesGroupIds.length > 0)" (click)="addAttributeGroup()">Submit</button> -->
+    </nb-card-footer>
+  </div>
+</nb-card>

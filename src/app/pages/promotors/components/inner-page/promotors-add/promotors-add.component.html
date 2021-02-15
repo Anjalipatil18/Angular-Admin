@@ -1,0 +1,193 @@
+<div class="tableListEdit col-12 p-0">
+  <form
+    class="inputGroup col-xl-8 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="getUsers(addForm.value)"
+  >
+    <nb-card class="p-3 mb-3">
+      <div class="form-group row" *ngIf="listUsers && listUsers.length > 0">
+        <label class="col-md-3 col-form-label labelT">User <em>*</em></label>
+        <div class="col-md-9 row userDetails">
+          <ngx-select-dropdown
+            class="col-10"
+            tabindex="0"
+            [multiple]="false"
+            formControlName="userId"
+            [config]="config"
+            [options]="listUsers"
+            (change)="getDob($event)"
+            [ngClass]="{ invalid: submitted && f.userId.errors }"
+          ></ngx-select-dropdown>
+          <span
+            [nbSpinner]="isLoading"
+            nbSpinnerStatus="primary"
+            nbButton
+            class="btn btn-info col-2"
+            (click)="openNewUserDialog()"
+            >Add</span
+          >
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">New User <em>*</em></label>
+        <div class="col-md-9">
+          <span [nbSpinner]="isLoading"
+          nbSpinnerStatus="primary" nbButton class="btn btn-info" (click)="openNewUserDialog()">Add New User</span>
+        </div>
+      </div> -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Address
+          <em>*</em>
+        </label>
+        <div class="col-md-9 addressList">
+          <!-- <input [ngClass]="{ invalid: submitted && f.location.errors }" type="text" class="form-control inputForm" 
+          formControlName="location" placeholder="Location" id="locatFill" (keyup)="locationSearch($event)"> -->
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Location Name</label>
+            <div class="col-md-9">
+              <input
+                id="locatFill"
+                type="text"
+                class="form-control inputForm"
+                placeholder="Address Name"
+                formControlName="addressName"
+                (keyup)="locationSearch($event)"
+                [ngClass]="{ invalid: submitted && f.addressName.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Line 1</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Line1"
+                formControlName="line1"
+                [ngClass]="{ invalid: submitted && f.line1.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Line 2</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Line 2"
+                formControlName="line2"
+                [ngClass]="{ invalid: submitted && f.line2.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Area</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Area"
+                formControlName="area"
+                [ngClass]="{ invalid: submitted && f.area.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">City</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="City"
+                formControlName="city"
+                [ngClass]="{ invalid: submitted && f.city.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">State</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="State"
+                formControlName="state"
+                [ngClass]="{ invalid: submitted && f.state.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Postal Code</label>
+            <div class="col-md-9">
+              <input
+                type="number"
+                class="form-control inputForm"
+                placeholder="Postal Code"
+                formControlName="postalCode"
+                [ngClass]="{ invalid: submitted && f.postalCode.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Country</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Country"
+                formControlName="country"
+                [ngClass]="{ invalid: submitted && f.country.errors }"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Pin <em>*</em></label>
+        <div class="col-md-9">
+          <input
+            type="number"
+            class="form-control inputForm"
+            placeholder="5-digit pin number"
+            formControlName="pin"
+            [ngClass]="{ invalid: submitted && f.pin.errors }"
+            onKeyPress="if(this.value.length==5) return false;"
+            onpaste="return false;"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Date of Birth <em>*</em></label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            #dob
+            (change)="dobChange(dob.value)"
+            formControlName="dob"
+            class="form-control inputForm"
+            mwlFlatpickr
+            [dateFormat]="'d-m-Y'"
+            maxDate="{{ maxDate }}"
+          />
+          <!-- <input
+            type="text"
+            class="form-control inputForm"
+            placeholder="Date Of Birth"
+            formControlName="title"
+            [ngClass]="{ invalid: submitted && f.title.errors }"
+          /> -->
+        </div>
+      </div>
+    </nb-card>
+
+    <div class="d-flex justify-content-center">
+      <button type="submit" nbButton size="small">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

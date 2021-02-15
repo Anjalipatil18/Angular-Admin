@@ -1,0 +1,93 @@
+<nb-card class="widthDialog">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup">
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label labelT">Role Title: </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          nbInput
+          [(ngModel)]="role"
+          class="form-control inputForm"
+          placeholder="Short Code"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 pr-0 py-0 col-form-label labelT"
+        >User Contact Details Masked:
+      </label>
+      <nb-checkbox
+        class="col-md-8 p-0"
+        [value]="userContactMasked"
+        (change)="userContactMasked = !userContactMasked"
+      ></nb-checkbox>
+    </div>
+    <h6 class="text-success">Access To:</h6>
+    <div class="form-group row">
+      <label class="col-md-4 pr-0 col-form-label labelT">PAGES: </label>
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="pageRead == 1"
+        (change)="reportCheckbox($event, 'read')"
+        >Read</nb-checkbox
+      >
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="pageWrite == 1"
+        (change)="reportCheckbox($event, 'write')"
+        >Write</nb-checkbox
+      >
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="pageEdit == 1"
+        (change)="reportCheckbox($event, 'edit')"
+        >Edit</nb-checkbox
+      >
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="pageDelete == 1"
+        (change)="reportCheckbox($event, 'delete')"
+        >Delete</nb-checkbox
+      >
+    </div>
+    <hr />
+    <div class="form-group row" *ngFor="let list of pagesMenu; let i = index">
+      <label class="col-md-4 pr-0 col-form-label labelT"
+        >{{ list.title }}:
+      </label>
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="list.read == 1"
+        (change)="pageCheckbox($event, i, 'read')"
+      ></nb-checkbox>
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="list.write == 1"
+        (change)="pageCheckbox($event, i, 'write')"
+      ></nb-checkbox>
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="list.edit == 1"
+        (change)="pageCheckbox($event, i, 'edit')"
+      ></nb-checkbox>
+      <nb-checkbox
+        class="col-md-2 p-0"
+        [value]="list.delete == 1"
+        (change)="pageCheckbox($event, i, 'delete')"
+      ></nb-checkbox>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+    <button
+      nbButton
+      status="info"
+      class="ml-2"
+      [disabled]="!role"
+      (click)="submit()"
+    >
+      {{ ok }}
+    </button>
+  </nb-card-footer>
+</nb-card>

@@ -1,0 +1,22 @@
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Report Ads Reasons" [active]="reportType == '1'">
+        <app-report-tag-reasons
+          *ngIf="tabList == 'Report Ads Reasons'"
+          (listTable)="listOnTable($event)"
+        ></app-report-tag-reasons>
+      </nb-tab>
+      <nb-tab tabTitle="Report User Reasons" [active]="reportType == '2'">
+        <app-report-user-reasons
+          *ngIf="tabList == 'Report User Reasons'"
+        ></app-report-user-reasons>
+      </nb-tab>
+      <nb-tab tabTitle="Delete Account Reasons" [active]="reportType == '3'">
+        <app-report-scene-reasons
+          *ngIf="tabList == 'Delete Account Reasons'"
+        ></app-report-scene-reasons>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

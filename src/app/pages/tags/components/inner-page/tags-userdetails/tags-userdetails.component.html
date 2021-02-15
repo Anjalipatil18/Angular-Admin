@@ -1,0 +1,187 @@
+<nb-card class="p-4">
+  <div id="myresult" class="img-zoom-result" [class.active]="!zoomBox"></div>
+  <div class="row m-0 userDetails">
+    <div class="col-sm-6 listItemImg">
+      <div class="carousalList row m-0 col-12 p-0">
+        <div class="allListCarousal col-4 col-md-2 p-0">
+          <div
+            class="imgContents col-12 p-0"
+            *ngFor="let img of carouselTileItems; let i = index"
+          >
+            <img
+              class="col-12 p-0"
+              (click)="carousalIndex(i)"
+              [class.active]="img.active"
+              [defaultImage]="defaultImage"
+              [lazyLoad]="img.url"
+              [offset]="offset"
+            />
+          </div>
+        </div>
+
+        <div class="col-8 col-md-10 p-0 innerImg">
+          <div class="col-12 allCatList p-0">
+            <div
+              class="img-zoom-container col-12 p-0 border"
+              (mouseleave)="zoomBox = !zoomBox"
+              (mouseenter)="imageZoom('myimage', 'myresult')"
+            >
+              <img
+                id="myimage"
+                class="col-12 p-0 imgCat"
+                [defaultImage]="defaultImage"
+                [lazyLoad]="lazyLoad"
+                [offset]="offset"
+              />
+            </div>
+          </div>
+
+          <!--           
+          <div class="col-12 allCatList p-0">       
+            <ngx-carousel
+              [inputs]="carouselTile"
+              (carouselLoad)="carouselTileLoad($event)"
+            >
+              <ngx-tile NgxCarouselItem *ngFor="let list of carouselTileItems; let i = index">
+                  <img class="col-12 p-0 imgCat" [defaultImage]="defaultImage" [lazyLoad]="list.imageLink" [offset]="offset"/> 
+              </ngx-tile>            
+
+              <button NgxCarouselPrev class="leftRs arrowList focus">
+                <i class="nb-arrow-left"></i>
+              </button>
+              <button NgxCarouselNext class="rightRs arrowList focus">
+                <i class="nb-arrow-right"></i>
+              </button>
+            </ngx-carousel>
+          </div> -->
+        </div>
+
+        <div
+          class="col-12 p-0 border mt-5 p-3 listUserDetails"
+          *ngIf="userDetails"
+        >
+          <nb-user
+            size="large"
+            name="{{ userDetails.firstName }} {{ userDetails.lastName }}"
+            title="{{ userDetails.email }}"
+            picture="{{ userDetails.profilePic }}"
+            showInitials="false"
+          >
+          </nb-user>
+        </div>
+        <div class="col-12 p-0 border  p-3 listUserDetails" *ngIf="listGroup">
+          <nb-card-header class="col-12 d-inline-block text-capitalize"
+            >Address</nb-card-header
+          >
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Location Name :</label
+            >
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.locationName }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Area :</label>
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.area }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Address Line :</label>
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.address }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">City :</label>
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.city }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Zip :</label>
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.zip }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">State :</label>
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.state }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT">Country :</label>
+            <div class="col-md-9 col-form-label labelT">
+              <span>{{ listGroup.country }}</span>
+              <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 productDetails">
+      <div class="attributrGroupList col-12 p-0" *ngIf="listGroup">
+        <h1 class="titleH1">{{ listGroup.title }}</h1>
+        <h2 class="titleH2 my-3">
+          {{ listGroup.units.symbol }} {{ listGroup.price.toFixed(2) }}
+        </h2>
+
+        <div
+          class="col-12 groupList form-group p-0"
+          *ngFor="let group of listGroup.details; let i = index"
+        >
+          <div class="col-12 p-0 border">
+            <nb-card-header class="col-12 d-inline-block text-capitalize">{{
+              group.attributesGroupTitle
+            }}</nb-card-header>
+            <div class="attributeList col-12 p-3">
+              <div
+                class="contentList col-12"
+                *ngFor="let list of group.attributes; let j = index"
+              >
+                <div
+                  class="form-group row"
+                  *ngIf="list.typeCode != 13 && list.typeCode != 14"
+                >
+                  <label class="col-md-3 col-form-label labelT">{{
+                    list.attributetitle
+                  }}</label>
+                  <div class="col-md-9 titleDescription text-capitalize">
+                    <span *ngIf="list.typeCode == 3"
+                      >Min {{ list.valueMin.en }} Max
+                      {{ list.valueMax.en }}</span
+                    >
+                    <span *ngIf="list.typeCode != 3">{{ list.value }}</span>
+                    <!-- <span *ngIf="list.typeCode != 3">{{list['value_'+list.typeCode]}} {{list.numericalType ? numericalType(list.numericalType.en.name) : ''}}</span> -->
+                  </div>
+                  <!-- <div class="col-md-9" *ngIf="list.typeCode == 13">
+                      <span class="imagsProduct" *ngFor="let img of list.value_13">                          
+                        <img class="imgesList" [src]="img.imageLink">
+                      </span>
+                    </div> -->
+                  <!-- <div class="col-md-9 " *ngIf="list.typeCode == 14">
+                        <span class="imagsProduct" *ngFor="let video of list.value_14">                            
+                            <video class="imgesList" controls>
+                                <source [src]="video.videoLink" type="video/mp4">
+                                <source [src]="video.videoLink" type="video/ogg">
+                              </video>
+                        </span>
+                      </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nb-card>

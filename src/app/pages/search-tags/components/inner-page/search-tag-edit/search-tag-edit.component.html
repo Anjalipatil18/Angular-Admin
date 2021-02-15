@@ -1,0 +1,58 @@
+<div
+  class="tableListEdit col-12 p-0"
+  *ngIf="langSelectors && langSelectors.length > 0"
+>
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-12 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="editSearchTags(addForm.value)"
+  >
+    <div class="row">
+      <div class="col-xl-7 adsSeperator">
+        <nb-card class="p-3 mb-3">
+          <div
+            class="form-group row"
+            [hidden]="!list.active"
+            *ngFor="let list of langSelectors; let i = index"
+          >
+            <label class="col-md-4 col-form-label labelT">
+              Search Tags ({{ list.language }})
+              <em>*</em>
+            </label>
+            <div class="col-md-8">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Tags Name"
+                formControlName="searchtagsname_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['searchtagsname_' + list.languageCode]
+                      .errors
+                }"
+              />
+            </div>
+          </div>
+          <div class="d-flex justify-content-center m-auto mt-2">
+            <button type="submit" nbButton size="small" class="mt-4">
+              Submit
+            </button>
+          </div>
+        </nb-card>
+      </div>
+    </div>
+  </form>
+  <!-- </nb-card> -->
+</div>

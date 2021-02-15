@@ -1,0 +1,179 @@
+<div
+  class="tableListEdit col-12 p-0"
+  *ngIf="langSelectors && langSelectors.length > 0"
+>
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-12 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="promotionPatchEditSubmit(addForm.value)"
+  >
+    <div class="row">
+      <div class="col-xl-7 adsSeperator">
+        <nb-card class="p-3 mb-3">
+          <!-- title -->
+          <div
+            class="form-group row"
+            [hidden]="!list.active"
+            *ngFor="let list of langSelectors; let i = index"
+          >
+            <label class="col-md-3 col-form-label labelT"
+              >Plan Name ({{ list.language }})
+              <em>*</em>
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Plan Name"
+                formControlName="planname_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['planname_' + list.languageCode].errors
+                }"
+              />
+            </div>
+          </div>
+          <!-- assetCondition Plan Type-->
+          <div
+            class="form-group row"
+            *ngIf="listPlanType && listPlanType.length > 0"
+          >
+            <label class="col-md-3 col-form-label labelT"
+              >Plan Type <em>*</em></label
+            >
+            <div class="col-md-9">
+              <ngx-select-dropdown
+                tabindex="0"
+                formControlName="plantype"
+                [options]="listPlanType"
+                (change)="changePlantype($event)"
+                [config]="assetConfig"
+                [ngClass]="{ invalid: submitted && f.plantype.errors }"
+              ></ngx-select-dropdown>
+            </div>
+          </div>
+
+          <div
+            class="form-group row"
+            [hidden]="!list.active"
+            *ngFor="let list of langSelectors; let i = index"
+          >
+            <label class="col-md-3 col-form-label labelT"
+              >Description ({{ list.language }})
+              <em>*</em>
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                placeholder="Description"
+                formControlName="description_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['description_' + list.languageCode].errors
+                }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Price<em>*</em></label
+            >
+            <div class="col-md-9 input-group full-width currency">
+              <ng-select
+                [items]="currencies"
+                bindLabel="name"
+                placeholder="Currency"
+                formControlName="currencyplan"
+                [(ngModel)]="currencySymbol"
+              >
+              </ng-select>
+              <input
+                type="number"
+                min="0"
+                class="form-control inputForm"
+                placeholder="Price"
+                formControlName="priceplan"
+                [ngClass]="{
+                  invalid:
+                    submitted && f.priceplan.errors && f.currencyplan.errors
+                }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Validity
+              <em>*</em>
+            </label>
+            <div class="col-md-3 input-group full-width currency">
+              <!-- price -->
+              <input
+                type="number"
+                min="0"
+                class="form-control inputForm"
+                placeholder="Enter Days"
+                formControlName="validitydays"
+                [ngClass]="{ invalid: submitted && f.validitydays.errors }"
+              />
+            </div>
+            <div class="col-md-1 input-group full-width currency mr-t">
+              Days
+            </div>
+            <div class="col-md-3 input-group full-width currency">
+              <ng-select
+                [items]="validityHoursList"
+                bindLabel="name"
+                placeholder="Enter Hours"
+                formControlName="validityhours"
+                [(ngModel)]="validityHoursNo"
+              >
+              </ng-select>
+            </div>
+            <div class="col-md-2 input-group full-width currency mr-t">
+              Hours
+            </div>
+          </div>
+
+          <div
+            class="form-group row"
+            [hidden]="hideUrgentListing"
+            *ngIf="listPlanCoverage && listPlanCoverage.length > 0"
+          >
+            <label class="col-md-3 col-form-label labelT"
+              >Plan Coverage <em>*</em></label
+            >
+            <div class="col-md-9">
+              <ngx-select-dropdown
+                tabindex="0"
+                formControlName="plancoverage"
+                [options]="listPlanCoverage"
+                [config]="coverageConfig"
+                [ngClass]="{ invalid: submitted && f.plancoverage.errors }"
+              ></ngx-select-dropdown>
+            </div>
+          </div>
+        </nb-card>
+        <div class="d-flex justify-content-center m-auto mt-2">
+          <button type="submit" nbButton size="small" class="mt-4">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- </nb-card> -->
+</div>

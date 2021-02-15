@@ -1,0 +1,118 @@
+<div class="tableListEdit col-12 p-0">
+  <!-- <div class="listCheckboxes mb-5">        
+        <nb-checkbox [disabled]="list.languageCode == 'en'" [value]="list.active" (change)="reportCheckbox($event, i, list.languageCode)" *ngFor="let list of langSelectors; let i = index;">{{list.language}}</nb-checkbox> 
+    </div> -->
+
+  <!-- <nb-card class="p-4"> -->
+  <form
+    class="inputGroup col-xl-12 p-0"
+    [formGroup]="addForm"
+    (ngSubmit)="getUsers(addForm.value)"
+  >
+    <div class="row">
+      <div class="col-xl-7">
+        <nb-card class="p-3 mb-3">
+          <!-- <div class="form-group row" *ngIf="listUsers && listUsers.length > 0">
+        <label class="col-md-3 col-form-label labelT">User
+          <em>*</em>
+        </label>
+        <div class="col-md-9">
+          <ngx-select-dropdown tabindex="0" [multiple]="false" formControlName="userId" [config]="config" [options]="listUsers" [ngClass]="{ invalid: submitted && f.userId.errors }"></ngx-select-dropdown>
+        </div>
+      </div> -->
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Tax Name
+              <em>*</em>
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                (keyup)="setTitle($event)"
+                placeholder="Tax Name"
+                formControlName="taxName"
+                [ngClass]="{ invalid: submitted && f.title.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Tag
+              <em>*</em>
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                (keyup)="setTitle($event)"
+                placeholder="Tag"
+                formControlName="taxTag"
+                [ngClass]="{ invalid: submitted && f.title.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Percentage Value
+              <em>*</em>
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                (keyup)="setTitle($event)"
+                placeholder="Percentage Value"
+                formControlName="taxPercentage"
+                [ngClass]="{ invalid: submitted && f.title.errors }"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Tax Code
+              <em>*</em>
+            </label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control inputForm"
+                (keyup)="setTitle($event)"
+                placeholder="Tax Code"
+                formControlName="taxCode"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Country
+              <em>*</em>
+            </label>
+            <div class="col-md-9  full-width userDetails">
+              <ngx-select-dropdown
+                class="col-10"
+                tabindex="0"
+                [multiple]="false"
+                formControlName="country"
+                #dataval
+                [config]="config"
+                [options]="currencies"
+                [ngClass]="{ invalid: submitted && f.country.errors }"
+              ></ngx-select-dropdown>
+              <!-- <ng-select class="w-100" [items]="currencies" bindLabel="name" placeholder="Select Country" formControlName="country" [(ngModel)]="currencySymbol" [ngClass]="{ invalid: submitted && f.title.errors }">
+              </ng-select> -->
+            </div>
+          </div>
+          <div class="d-flex justify-content-center m-auto mt-2">
+            <button type="submit" nbButton size="small" class="mt-4">
+              Submit
+            </button>
+          </div>
+        </nb-card>
+      </div>
+
+      <!-- product seo end -->
+    </div>
+  </form>
+  <!-- </nb-card> -->
+</div>

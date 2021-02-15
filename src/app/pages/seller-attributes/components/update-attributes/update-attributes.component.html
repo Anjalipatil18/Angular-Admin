@@ -1,0 +1,469 @@
+<div
+  class="tableListEdit col-12 p-0"
+  *ngIf="langSelectors && langSelectors.length > 0"
+>
+  <!-- <i class="nb-arrow-thin-left iconArrow" (click)="back()"></i> -->
+  <div class="listCheckboxes mb-5">
+    <nb-checkbox
+      class="mr-2"
+      [disabled]="list.languageCode == 'en'"
+      [value]="list.active"
+      (change)="reportCheckbox($event, i, list.languageCode)"
+      *ngFor="let list of langSelectors; let i = index"
+      >{{ list.language }}</nb-checkbox
+    >
+  </div>
+  <nb-card class="p-4">
+    <form
+      class="inputGroup col-xl-8 p-0"
+      [formGroup]="addForm"
+      (ngSubmit)="getUsers(addForm.value)"
+    >
+      <div
+        class="form-group row"
+        [hidden]="!list.active"
+        *ngFor="let list of langSelectors; let i = index"
+      >
+        <label class="col-md-3 col-form-label labelT"
+          >Title ({{ list.language }}) <em>*</em></label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="title_{{ list.languageCode }}"
+            [ngClass]="{
+              invalid:
+                submitted &&
+                addForm.controls['title_' + list.languageCode].errors
+            }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Title Tag <em>*</em></label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="titleTag"
+            [ngClass]="{ invalid: submitted && f.titleTag.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Type <em>*</em></label>
+        <div class="col-md-9">
+          <input type="hidden" formControlName="typeText" />
+          <nb-select
+            placeholder="Select Type"
+            formControlName="typeCode"
+            (selectedChange)="typeSelect($event, false)"
+            [ngClass]="{ invalid: submitted && f.typeCode.errors }"
+          >
+            <nb-option
+              [value]="getSelectValue(i)"
+              *ngFor="let list of listType; let i = index"
+              >{{ list.title }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+
+      <!-- dynamic starts -->
+      <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 1">
+        <div
+          class="form-group row"
+          [hidden]="!list.active"
+          *ngFor="let list of langSelectors; let i = index"
+        >
+          <label class="col-md-3 col-form-label labelT"
+            >Conditions ({{ list.language }})</label
+          >
+          <div class="row m-0 col-md-9">
+            <div class="col-md-6 pl-md-0">
+              <input
+                type="text"
+                class="form-control inputForm"
+                formControlName="valueMin_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['valueMin_' + list.languageCode].errors
+                }"
+                placeholder="min {{ imageVideoPlaceholder }}"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              />
+            </div>
+            <div class="col-md-6 pr-md-0">
+              <input
+                type="text"
+                class="form-control inputForm"
+                formControlName="valueMax_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['valueMax_' + list.languageCode].errors
+                }"
+                placeholder="max {{ imageVideoPlaceholder }}"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- for  document -->
+      <!-- <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 5">
+        <div class="form-group row"  [hidden]="!list.active" *ngFor ="let list of langSelectors; let i = index;">
+            <label class="col-md-3 col-form-label labelT">Document Name({{list.language}})</label>
+            <div class="row m-0 col-md-9">
+              <div class="col-md-6 pl-md-0" >
+                  <input type="text" class="form-control inputForm" formControlName="documentName_{{list.languageCode}}" [ngClass]="{ invalid: submitted && addForm.controls['documentName_'+list.languageCode].errors }" placeholder="document name" >
+              </div>
+            </div>
+        </div>
+      </div> -->
+
+      <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 6">
+        <!-- [hidden]="!list.active" *ngFor ="let list of langSelectors; let i = index;" -->
+        <div
+          class="form-group row"
+          [hidden]="!list.active"
+          *ngFor="let list of langSelectors; let i = index"
+        >
+          <label class="col-md-3 col-form-label labelT"
+            >Document Name({{ list.language }})</label
+          >
+          <div class="row m-0 col-md-9">
+            <div class="col-md-6 pl-md-0">
+              <input
+                type="text"
+                class="form-control inputForm"
+                formControlName="documentName_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['documentName_' + list.languageCode].errors
+                }"
+                placeholder="document name"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label labelT">Document type</label>
+          <div class="row m-0 col-md-3">
+            <ng-select
+              [items]="docType"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="1.PDF 2.IMAGE 3.DOCTYPE"
+              formControlName="documentTypeCode"
+              class="w-100"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label labelT">Is Auto approved</label>
+          <div class="form-group row">
+            <!-- <label class="col-md-3 col-form-label labelT">Mandatory </label> -->
+            <div class="col-md-6">
+              <ui-switch formControlName="isAutoApproved"></ui-switch>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label labelT"
+            >Number Of documents allowed</label
+          >
+          <div class="row m-0 col-md-3">
+            <input
+              type="text"
+              class="form-control inputForm"
+              formControlName="noOfDocumentsAllowed"
+              [ngClass]="{
+                invalid: submitted && addForm.controls['noOfDocAllowed'].errors
+              }"
+              placeholder="number"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label labelT">Is Expiry Needed</label>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <ui-switch
+                formControlName="expiryNeeded"
+                (change)="isExpiryNeededChecked($event)"
+              ></ui-switch>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="showExpiryDate">
+          <label class="col-md-3 col-form-label labelT">Expiry Date</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control inputForm"
+              formControlName="expiryDate"
+              (change)="groupTextList($event)"
+              mwlFlatpickr
+              [enableTime]="true"
+              [dateFormat]="'Y-m-d H:i'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 5">
+        <div class="form-group row" >
+          <label class="col-md-3 col-form-label labelT">Is Auto approved</label>
+          <div class="form-group row">
+            <div class="col-md-6" >
+                <ui-switch formControlName="isAutoApproved"></ui-switch> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 5">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label labelT">Number Of documents allowed</label>
+          <div class="row m-0 col-md-3">
+            <input type="text" class="form-control inputForm" formControlName="noOfDocumentsAllowed" [ngClass]="{ invalid: submitted && addForm.controls['noOfDocumentsAllowed'].errors }" placeholder="number" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+          </div>
+        </div>
+      </div> -->
+
+      <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 2">
+        <div
+          class="col-12 p-0"
+          [hidden]="!list.active"
+          *ngFor="let list of langSelectors; let i = index"
+        >
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Conditions Min ({{ list.language }})</label
+            >
+            <div class="row m-0 col-md-9">
+              <div class="col-md-6 pl-md-0">
+                <!-- <input type="text" class="form-control inputForm" formControlName="unitMin_{{list.languageCode}}" [ngClass]="{ invalid: submitted && addForm.controls['unitMin_'+list.languageCode].errors }" placeholder="Unit Name ({{list.language}})"> -->
+                <ng-select
+                  [items]="unitsList"
+                  bindLabel="name"
+                  placeholder="Unit Name ({{ list.language }})"
+                  formControlName="unitMin_{{ list.languageCode }}"
+                  [(ngModel)]="unitMinValue"
+                  (change)="unitminchange($event)"
+                >
+                </ng-select>
+              </div>
+              <div class="col-md-6 pr-md-0">
+                <input
+                  type="text"
+                  class="form-control inputForm"
+                  formControlName="valueMin_{{ list.languageCode }}"
+                  [ngClass]="{
+                    invalid:
+                      submitted &&
+                      addForm.controls['valueMin_' + list.languageCode].errors
+                  }"
+                  placeholder="Min Value ({{ list.language }})"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label labelT"
+              >Conditions Max ({{ list.language }})</label
+            >
+            <div class="row m-0 col-md-9">
+              <div class="col-md-6 pl-md-0">
+                <input
+                  type="text"
+                  disabled
+                  [(ngModel)]="unitValue"
+                  class="form-control inputForm"
+                  formControlName="unitMax_{{ list.languageCode }}"
+                  [ngClass]="{
+                    invalid:
+                      submitted &&
+                      addForm.controls['unitMax_' + list.languageCode].errors
+                  }"
+                  placeholder="Unit Name ({{ list.language }})"
+                />
+                <!-- <ng-select [items]="unitsList"
+                    bindLabel="name"
+                    placeholder="Unit Name ({{list.language}})"
+                    formControlName="unitMax_{{list.languageCode}}"
+                    >
+                  </ng-select> -->
+              </div>
+              <div class="col-md-6 pr-md-0">
+                <input
+                  type="text"
+                  class="form-control inputForm"
+                  formControlName="valueMax_{{ list.languageCode }}"
+                  [ngClass]="{
+                    invalid:
+                      submitted &&
+                      addForm.controls['valueMax_' + list.languageCode].errors
+                  }"
+                  placeholder="Max Value ({{ list.language }})"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 3">
+        <div
+          class="form-group row"
+          [hidden]="!list.active"
+          *ngFor="let list of langSelectors; let i = index"
+        >
+          <label class="col-md-3 col-form-label labelT"
+            >Conditions ({{ list.language }})</label
+          >
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control inputForm"
+              formControlName="values_{{ list.languageCode }}"
+              [ngClass]="{
+                invalid:
+                  submitted &&
+                  addForm.controls['values_' + list.languageCode].errors
+              }"
+              placeholder="Enter values comma(,) seprated"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="typeContentList col-12 p-0" *ngIf="typeMinMax == 4">
+        <div
+          class="form-group row"
+          [hidden]="!list.active"
+          *ngFor="let list of langSelectors; let i = index"
+        >
+          <label class="col-md-3 col-form-label labelT"
+            >Conditions ({{ list.language }})</label
+          >
+          <div class="row m-0 col-md-9">
+            <div class="col-md-6 pl-md-0">
+              <!-- <input type="text" class="form-control inputForm" formControlName="numericalType_{{list.languageCode}}" [ngClass]="{ invalid: submitted && addForm.controls['numericalType_'+list.languageCode].errors }" placeholder="Numeric"> -->
+              <ng-select
+                [items]="unitsList"
+                bindLabel="name"
+                placeholder="Numeric"
+                formControlName="numericalType_{{ list.languageCode }}"
+                [(ngModel)]="numeric"
+              >
+              </ng-select>
+            </div>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control inputForm"
+                formControlName="valueMin_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['valueMin_' + list.languageCode].errors
+                }"
+                placeholder="min"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              />
+            </div>
+            <div class="col-md-3 pr-md-0">
+              <input
+                type="text"
+                class="form-control inputForm"
+                formControlName="valueMax_{{ list.languageCode }}"
+                [ngClass]="{
+                  invalid:
+                    submitted &&
+                    addForm.controls['valueMax_' + list.languageCode].errors
+                }"
+                placeholder="max"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- dynamic ends -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Icon</label>
+        <div class="col-md-9">
+          <div
+            class="imgLoading"
+            *ngIf="isLoadingIcon"
+            [nbSpinner]="isLoadingIcon"
+            nbSpinnerStatus="primary"
+          ></div>
+          <img
+            class="userImgEdit"
+            *ngIf="profilePicIcon"
+            [src]="profilePicIcon"
+          />
+          <!-- <input type="file" class="inputForm border-0" accept="image/*" (change)="uploadIconFile($event)"> -->
+          <input
+            type="file"
+            id="uploadSellInput"
+            name="image"
+            accept="image/*"
+            class="inputForm border-0"
+            (change)="uploadIconFile($event)"
+            ng2FileSelect
+            [uploader]="uploader"
+            multiple
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Mandatory </label>
+        <div class="col-md-6">
+          <ui-switch formControlName="mandatory"></ui-switch>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Filterable </label>
+        <div class="col-md-6">
+          <ui-switch formControlName="filterable"></ui-switch>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Ratable </label>
+        <div class="col-md-6">
+          <ui-switch formControlName="ratable"></ui-switch>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Show on Profile </label>
+        <div class="col-md-6">
+          <ui-switch formControlName="showOnProfile"></ui-switch>
+        </div>
+      </div>
+      <div class="col-12 p-0 text-center text-danger form-group" *ngIf="errMsg">
+        <small> {{ errMsg }}</small>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card>
+</div>

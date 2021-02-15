@@ -1,0 +1,123 @@
+<nb-card class="widthDialog" *ngIf="!action">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup">
+    <form
+      class="inputGroup"
+      [formGroup]="addForm"
+      (ngSubmit)="getUsers(addForm.value)"
+    >
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >User Name <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="username"
+            [ngClass]="{ invalid: submitted && f.username.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT">Email <em>*</em></label>
+        <div class="col-md-8">
+          <input
+            type="text"
+            class="form-control inputForm"
+            formControlName="email"
+            [ngClass]="{ invalid: (submitted && f.email.errors) || emailVaild }"
+          />
+          <div *ngIf="emailVaild" class="text-danger">
+            This email is already registered
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT">Role <em>*</em></label>
+        <div class="col-md-8">
+          <nb-select
+            formControlName="roleId"
+            [ngClass]="{ invalid: submitted && f.roleId.errors }"
+            placeholder="Select Role"
+          >
+            <nb-option [value]="list._id" *ngFor="let list of roles">{{
+              list.role
+            }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Password <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="password"
+            class="form-control inputForm"
+            formControlName="password"
+            [ngClass]="{ invalid: submitted && f.password.errors }"
+          />
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button nbButton status="danger" size="small" (click)="cancel()">
+          Cancel
+        </button>
+        <button type="submit" class="ml-1" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<!-- reset pswd -->
+
+<nb-card class="widthDialog" *ngIf="action">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body class="inputGroup">
+    <form
+      class="inputGroup"
+      [formGroup]="addForm"
+      (ngSubmit)="getUsersPswd(addForm.value)"
+    >
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >New Password <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="password"
+            class="form-control inputForm"
+            formControlName="password"
+            [ngClass]="{ invalid: submitted && f.password.errors }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label labelT"
+          >Confirm Password <em>*</em></label
+        >
+        <div class="col-md-8">
+          <input
+            type="password"
+            class="form-control inputForm"
+            formControlName="cPassword"
+            [ngClass]="{
+              invalid: (submitted && f.cPassword.errors) || pwdVaild
+            }"
+          />
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button nbButton status="danger" size="small" (click)="cancel()">
+          Cancel
+        </button>
+        <button type="submit" class="ml-1" nbButton size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

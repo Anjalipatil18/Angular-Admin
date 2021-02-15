@@ -1,0 +1,27 @@
+<i class="nb-arrow-thin-left iconArrow" (click)="back()"></i>
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Scenes">
+        <app-active-scenes
+          *ngIf="tabList == 'Active Scenes'"
+        ></app-active-scenes>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Scenes">
+        <app-deleted-scenes
+          *ngIf="tabList == 'Deleted Scenes'"
+        ></app-deleted-scenes>
+      </nb-tab>
+      <nb-tab tabTitle="Reported Scenes">
+        <app-reported-scenes
+          *ngIf="tabList == 'Reported Scenes'"
+        ></app-reported-scenes>
+      </nb-tab>
+      <nb-tab tabTitle="Suspended Scenes">
+        <app-suspended-scenes
+          *ngIf="tabList == 'Suspended Scenes'"
+        ></app-suspended-scenes>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

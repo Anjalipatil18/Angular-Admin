@@ -1,0 +1,128 @@
+<!-- dalete by providing reason -->
+<nb-card class="popupContent" *ngIf="reason">
+  <nb-card-header class="text-center">{{ title }}</nb-card-header>
+  <nb-card-body>
+    <!-- <h5 class="text-center">{{content}}</h5> -->
+    <div class="form-group row text-center">
+      <label class="col-md-12 col-form-label labelT"
+        >Are you sure want to {{ title }} !</label
+      >
+
+      <label class="col-md-3 col-form-label labelT">Reason: </label>
+      <div class="col-md-9">
+        <textarea
+          #Textinput
+          type="text"
+          nbInput
+          [(ngModel)]="reasons"
+          [value]="reasons"
+          class="form-control inputForm"
+          placeholder="Enter reason"
+        >
+        </textarea>
+
+        <!-- <input
+        type="text"
+        nbInput
+        [value]="lang"
+        class="form-control inputForm" 
+        placeholder="Short Code"
+        readonly
+      /> -->
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+    <button nbButton status="info" class="ml-2" (click)="submit(reasons)">
+      {{ ok }}
+    </button>
+  </nb-card-footer>
+</nb-card>
+
+<div *ngIf="!reason">
+  <nb-card class="popupContent" *ngIf="!action">
+    <nb-card-header class="text-center">{{ title }} !</nb-card-header>
+    <!-- <nb-card-body>
+    <h5 class="text-center">{{content}}</h5>
+    </nb-card-body> -->
+    <nb-card-footer class="text-right">
+      <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+      <button nbButton status="info" class="ml-2" (click)="submit('ok')">
+        {{ ok }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+
+  <!-- select data field -->
+  <nb-card class="widthDialog" *ngIf="action">
+    <nb-card-header class="text-center">{{ title }}</nb-card-header>
+    <nb-card-body class="inputGroup">
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT"
+          >Language: <em>*</em></label
+        >
+        <div class="col-md-9">
+          <ngx-select-dropdown
+            (change)="langSelect()"
+            *ngIf="language"
+            tabindex="0"
+            [(ngModel)]="lang"
+            [multiple]="false"
+            [config]="config"
+            [options]="content"
+            [ngClass]="{ invalid: submitted }"
+          ></ngx-select-dropdown>
+          <nb-select
+            *ngIf="!language"
+            [(ngModel)]="lang"
+            placeholder="Select Language"
+          >
+            <nb-option
+              [value]="list.languageCode"
+              *ngFor="let list of content"
+              >{{ list.language }}</nb-option
+            >
+          </nb-select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label labelT">Short Code: </label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            nbInput
+            [value]="langCode"
+            fullWidth
+            class="form-control inputForm"
+            placeholder="Short Code"
+            readonly
+            *ngIf="language"
+          />
+          <input
+            type="text"
+            nbInput
+            [value]="langCode"
+            fullWidth
+            class="form-control inputForm"
+            placeholder="Short Code"
+            readonly
+            *ngIf="!language"
+          />
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+      <button nbButton status="danger" (click)="cancel()">{{ cancelT }}</button>
+      <button
+        nbButton
+        status="info"
+        class="ml-2"
+        [disabled]="!lang"
+        (click)="submit(lang)"
+      >
+        {{ ok }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</div>

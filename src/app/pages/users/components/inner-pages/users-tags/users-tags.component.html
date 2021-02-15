@@ -1,0 +1,18 @@
+<i class="nb-arrow-thin-left iconArrow" (click)="back()"></i>
+<div class="col-12 p-0 tableSmartList">
+  <nb-card>
+    <nb-tabset (changeTab)="selectTab($event)">
+      <nb-tab tabTitle="Active Ads">
+        <app-active-tags *ngIf="tabList == 'Active Ads'"></app-active-tags>
+      </nb-tab>
+      <nb-tab tabTitle="Deleted Ads">
+        <app-deleted-tags *ngIf="tabList == 'Deleted Ads'"></app-deleted-tags>
+      </nb-tab>
+      <nb-tab tabTitle="Deactivated Ads">
+        <app-deactivated-tags
+          *ngIf="tabList == 'Deactivated Ads'"
+        ></app-deactivated-tags>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>

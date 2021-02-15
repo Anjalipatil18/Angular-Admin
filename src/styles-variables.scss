@@ -1,0 +1,103 @@
+$theme-colors: (
+  'primary': #84329b,
+  'secondary': #02bceb,
+);
+$white: #fff;
+/** ngx-datatable **/
+.ngx-datatable.fixed-header .datatable-header {
+  height: auto !important;
+  .datatable-header-inner {
+    background: #ebeff5;
+    width: 100% !important;
+    font-size: 1rem;
+    border-top: 1px solid #d1d4d7;
+    font-weight: 500;
+  }
+}
+.ngx-datatable .datatable-body-cell,
+.ngx-datatable .datatable-header-cell {
+  border: 0px !important;
+  border-right: 1px solid #d1d4d7 !important;
+  word-break: break-word;
+  white-space: normal !important;
+  // text-align: center !important;
+  // font-size: 1rem;
+}
+.ngx-datatable .datatable-body-cell:first-child,
+.ngx-datatable .datatable-header-cell:first-child {
+  width: 70px !important;
+}
+.ngx-datatable .datatable-row-center {
+  justify-content: space-between;
+  width: 100% !important;
+  border: 1px solid #d1d4d7;
+  border-right: 0;
+  border-top: 0;
+}
+.ngx-datatable .datatable-body .datatable-scroll,
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row {
+  width: 100% !important;
+  border: 0 !important;
+}
+
+.ngx-datatable.bootstrap .datatable-body .empty-row {
+  text-align: center;
+  border: 1px solid #d1d4d7;
+  border-top: 0;
+}
+.ngx-datatable.bootstrap .datatable-footer {
+  background: #fff !important;
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.54) !important;
+  .datatable-pager {
+    li.active {
+      a {
+        background-color: rgba(158, 158, 158, 0.2) !important;
+      }
+    }
+    a {
+      color: rgba(0, 0, 0, 0.54) !important;
+      background-color: #fff !important;
+      &:hover {
+        color: rgba(0, 0, 0, 0.75);
+        background-color: rgba(158, 158, 158, 0.2) !important;
+      }
+    }
+  }
+}
+
+.nb-theme-default nb-menu .menu-item a:hover,
+.nb-theme-default nb-menu .menu-item a.active {
+  color: #418fdb !important;
+}
+.tableList .customised-control-description {
+  padding: 0px !important;
+}
+
+.cdk-global-scrollblock {
+  // top: 0px !important;
+}
+.iconNb {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+em {
+  color: red;
+}
+.form-control:focus {
+  box-shadow: 0 0 !important;
+  border-color: #ced4da !important;
+}
+
+.invalid {
+  border-color: tomato !important;
+}
+.ng-touched {
+  .ng-valid {
+    border-color: green !important;
+  }
+}
+.nb-theme-default nb-checkbox .text {
+  padding-left: 0.3333rem !important;
+  padding-right: 0.6666rem !important;
+}

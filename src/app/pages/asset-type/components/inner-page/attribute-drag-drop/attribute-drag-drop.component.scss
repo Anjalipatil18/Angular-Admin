@@ -1,0 +1,43 @@
+    .pop{
+        /* height: 50px; */
+        margin-left: 20px;
+        /* display: flex; */
+        width: 100%;
+        /* justify-content: center; */
+        /* align-items: center; */
+        text-align: center;
+        text-transform: capitalize;
+    &.border-top-0:first-child{
+      border-top: 1px solid #dee2e6 !important;
+    }
+    
+}
+.titleLink{
+  cursor: pointer;
+  color: #418fdb;
+  text-decoration: underline;
+  font-size: 13px;
+}
+
+.iconArrow.iconSearch {
+    position: absolute;
+    top: 8px;
+    color: #aeafb1;
+    left: 5px;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+.dragDropData {
+  height: 100%;
+  .subTitle {
+    font-weight: 700;
+    font-size: 77.5%;
+  }
+}
